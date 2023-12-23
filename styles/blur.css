@@ -1,0 +1,8 @@
+.lazy-load-image-background.blur {
+  filter: blur(25px);
+}
+
+.lazy-load-image-background.blur.lazy-load-image-loaded {
+  filter: blur(0);
+  transition-delay: .5s;
+}
