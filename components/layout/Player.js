@@ -1,7 +1,16 @@
 import { useRef, useEffect, useState, useContext } from "react";
 import cn from "classnames";
 import axios from "axios";
-import { Drawer } from "vaul";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  DrawerFooter,
+} from "@/components/ui/drawer";
 import ReactPlayer from "react-player";
 import { Slider } from "@/components/ui/slider";
 import { SongIdsContext } from "./SongIdsContext";
@@ -426,9 +435,9 @@ const Player = () => {
           className="fixed top-0 hidden"
         />
       </div>
-      <Drawer.Root shouldScaleBackground>
-        <Drawer.Trigger asChild>
-          <Card className="px-1 cursor-pointer w-96">
+      <Drawer className="rounded-none">
+        <DrawerTrigger asChild>
+          <Card className="px-1 cursor-pointer w-72 md:w-80 sm:w-96">
             <div className="flex flex-row space-x-2 w-full">
               <div>
                 <div className="flex flex-row py-1">
@@ -464,9 +473,9 @@ const Player = () => {
                       </>
                     )}
                     <div className="flex flex-row space-x-1 max-w-[30rem]">
-                      <div className="flex flex-row">
+                      <div className="flex flex-row items-center">
                         <Button
-                          className="h-full"
+                          className="size-10 p-0"
                           variant="ghost"
                           onClick={(event) => {
                             setCurrentSongIndex(
@@ -478,15 +487,17 @@ const Player = () => {
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="size-6"
+                            className="size-4"
+                            viewBox="0 0 32 32"
                           >
-                            <path d="M9.195 18.44c1.25.714 2.805-.189 2.805-1.629v-2.34l6.945 3.968c1.25.715 2.805-.188 2.805-1.628V8.69c0-1.44-1.555-2.343-2.805-1.628L12 11.029v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256l7.108 4.061Z" />
+                            <path
+                              fill="currentColor"
+                              d="M6 5a1 1 0 0 0-2 0v22a1 1 0 1 0 2 0zm22.003 1.504c0-2.002-2.236-3.192-3.897-2.073l-14.003 9.432A2.5 2.5 0 0 0 10.09 18l14.003 9.56c1.66 1.132 3.91-.056 3.91-2.065z"
+                            />
                           </svg>
                         </Button>
                         <Button
-                          className="h-full"
+                          className="size-10 p-0"
                           variant="ghost"
                           onClick={(event) => {
                             setIsPlaying(!isPlaying);
@@ -494,37 +505,27 @@ const Player = () => {
                           }}
                         >
                           {isPlaying === true ? (
-                             <svg
-                             t="1692268156116"
-                             fill="currentColor"
-                             className="size-6"
-                             viewBox="0 0 1024 1024"
-                             version="1.1"
-                             xmlns="http://www.w3.org/2000/svg"
-                             p-id="4153"
-                           >
-                             <path
-                               d="M298.666667 196.266667c0-23.893333 0-35.84 4.650666-44.970667a42.666667 42.666667 0 0 1 18.645334-18.645333C331.093333 128 343.04 128 366.933333 128h34.133334c23.893333 0 35.84 0 44.970666 4.650667a42.666667 42.666667 0 0 1 18.645334 18.645333C469.333333 160.426667 469.333333 172.373333 469.333333 196.266667v588.8c0 23.893333 0 35.84-4.650666 44.970666a42.666667 42.666667 0 0 1-18.645334 18.645334C436.906667 853.333333 424.96 853.333333 401.066667 853.333333h-34.133334c-23.893333 0-35.84 0-44.970666-4.650666a42.666667 42.666667 0 0 1-18.645334-18.645334C298.666667 820.906667 298.666667 808.96 298.666667 785.066667V196.266667zM554.666667 196.266667c0-23.893333 0-35.84 4.650666-44.970667a42.666667 42.666667 0 0 1 18.645334-18.645333C587.093333 128 599.04 128 622.933333 128h34.133334c23.893333 0 35.84 0 44.970666 4.650667a42.666667 42.666667 0 0 1 18.645334 18.645333C725.333333 160.426667 725.333333 172.373333 725.333333 196.266667v588.8c0 23.893333 0 35.84-4.650666 44.970666a42.666667 42.666667 0 0 1-18.645334 18.645334C692.906667 853.333333 680.96 853.333333 657.066667 853.333333h-34.133334c-23.893333 0-35.84 0-44.970666-4.650666a42.666667 42.666667 0 0 1-18.645334-18.645334C554.666667 820.906667 554.666667 808.96 554.666667 785.066667V196.266667z"
-                               p-id="4154"
-                             ></path>
-                           </svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="size-8 bi bi-pause-fill"
+                              fill="currentColor"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5" />
+                            </svg>
                           ) : (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
                               fill="currentColor"
-                              className="size-6"
+                              className="size-8 bi bi-play-fill"
+                              viewBox="0 0 16 16"
                             >
-                              <path
-                                fillRule="evenodd"
-                                d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-                                clipRule="evenodd"
-                              />
+                              <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                             </svg>
                           )}
                         </Button>
                         <Button
-                          className="h-full"
+                          className="size-10 p-0"
                           variant="ghost"
                           onClick={(event) => {
                             setCurrentSongIndex(
@@ -535,11 +536,13 @@ const Player = () => {
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="size-6"
+                            className="size-4"
+                            viewBox="0 0 32 32"
                           >
-                            <path d="M5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256l-7.108-4.061C13.555 6.346 12 7.249 12 8.689v2.34L5.055 7.061Z" />
+                            <path
+                              fill="currentColor"
+                              d="M26.002 5a1 1 0 1 1 2 0v22a1 1 0 0 1-2 0zM3.999 6.504c0-2.002 2.236-3.192 3.897-2.073l14.003 9.432A2.5 2.5 0 0 1 21.912 18L7.909 27.56c-1.66 1.132-3.91-.056-3.91-2.065z"
+                            />
                           </svg>
                         </Button>
                       </div>
@@ -549,34 +552,128 @@ const Player = () => {
               </div>
             </div>
           </Card>
-        </Drawer.Trigger>
-        <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 bg-white/40 dark:bg-white/10 backdrop-blur-3xl" />
-          <Drawer.Content className="z-[99999999] bg-white dark:bg-black text-black dark:text-white flex flex-col rounded-t-xl h-screen mt-24 fixed bottom-0 left-0 right-0 border-neutral-800 focus:outline-none">
-            <div className="p-4 bg-zinc-50 dark:bg-zinc-950 flex-1">
-              <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-neutral-300 dark:bg-neutral-700 mb-8" />
-              <div className="w-full flex flex-row">
+        </DrawerTrigger>
+        <div>
+          <DrawerContent className="z-[99999999] bg-white dark:bg-black text-black dark:text-white flex flex-col rounded-t-xl h-screen mt-24 fixed bottom-0 left-0 right-0 border-neutral-800 focus:outline-none">
+            <div className="p-0 md:p-2 sm:p-4 bg-white dark:bg-zinc-950 flex-1">
+              <DrawerClose asChild>
+                <Button
+                  variant="ghost"
+                  className="absolute hidden md:flex sm:flex top-4 left-4 sm:top-8 sm:left-8 items-center w-12 h-12 p-0 text-neutral-600 dark:text-neutral-400 opacity-75"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="size-10"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </Button>
+              </DrawerClose>
+              <div className="w-full flex flex-row mt-4 md:mt-12 sm:mt-0">
                 <div className="flex justify-center sm:justify-end w-full md:w-1/2 sm:w-1/2 px-4 md:px-6 sm:px-12">
                   {songInfo.map((song) => (
                     <div>
                       <LazyLoadImage
                         effect="blur"
                         src={`${song.al.picUrl}?param=512y512`}
-                        className="rounded-xl h-auto w-[28rem]"
+                        className="rounded-xl h-auto w-full sm:w-[28rem]"
                       />
 
                       <div className="flex flex-row justify-between">
                         <div className="flex flex-col font-medium mt-2 px-2 py-1.5 space-y-0.5">
-                          <h1 className="line-clamp-1 truncate text-lg md:text-xl sm:text-2xl w-96 font-medium">
+                          <h1 className="line-clamp-1 truncate text-lg w-56 md:w-64 sm:w-96 font-medium">
                             {song.name}
                           </h1>
-                          <h2 className="font-normal opacity-75 truncate w-96 -mt-1">
+                          <h2 className="text-lg font-normal opacity-75 truncate w-56 md:w-64 sm:w-96 -mt-1">
                             {song.ar.map((artist) => artist.name).join(" / ")}
                           </h2>
                         </div>
-                        <div>
-                          <button
-                            className="mt-4 rounded-lg w-12 h-12 flex justify-center items-center"
+                        <div className="flex flex-row space-x-2">
+                          <Drawer>
+                            <DrawerTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                className="flex md:hidden sm:hidden size-10 p-0 items-center mt-6"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="currentColor"
+                                  className="size-5 bi bi-chat-square-quote-fill"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm7.194 2.766a1.688 1.688 0 0 0-.227-.272 1.467 1.467 0 0 0-.469-.324l-.008-.004A1.785 1.785 0 0 0 5.734 4C4.776 4 4 4.746 4 5.667c0 .92.776 1.666 1.734 1.666.343 0 .662-.095.931-.26-.137.389-.39.804-.81 1.22a.405.405 0 0 0 .011.59c.173.16.447.155.614-.01 1.334-1.329 1.37-2.758.941-3.706a2.461 2.461 0 0 0-.227-.4zM11 7.073c-.136.389-.39.804-.81 1.22a.405.405 0 0 0 .012.59c.172.16.446.155.613-.01 1.334-1.329 1.37-2.758.942-3.706a2.466 2.466 0 0 0-.228-.4 1.686 1.686 0 0 0-.227-.273 1.466 1.466 0 0 0-.469-.324l-.008-.004A1.785 1.785 0 0 0 10.07 4c-.957 0-1.734.746-1.734 1.667 0 .92.777 1.666 1.734 1.666.343 0 .662-.095.931-.26z" />
+                                </svg>
+                              </Button>
+                            </DrawerTrigger>
+                            <DrawerContent className="z-[99999999999999]"> 
+                              <div className="block md:hidden sm:hidden w-full h-[80vh] overflow-y-auto">
+                                <div className="py-4 overflow-y-auto select-none mt-8">
+                                  <div
+                                    ref={lyricsContainerRef}
+                                    style={{ maxHeight: "100%" }}
+                                  >
+                                    {lyrics.map((line, index) => {
+                                      const translationLine =
+                                        translatedLyrics.find(
+                                          (translatedLine) =>
+                                            translatedLine.timestamp ===
+                                              line.timestamp && line.text !== ""
+                                        );
+                                      const highlightedIndex = lyrics.findIndex(
+                                        (lyric) =>
+                                          lyric.text === highlightedLine &&
+                                          lyric.timestamp ===
+                                            highlightedLineTimestamp
+                                      );
+                                      const isHighlightedRow =
+                                        index === highlightedIndex;
+                                      return (
+                                        <p
+                                          key={index}
+                                          className={cn(
+                                            "text-balance transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
+                                            isHighlightedRow &&
+                                              highlightedIndex !== -1 &&
+                                              "font-medium text-[1.75rem] md:text-[32px] sm:text-[34px] blur-0",
+                                            !isHighlightedRow &&
+                                              "opacity-50 text-[28px] sm:text-[30px] font-medium"
+                                          )}
+                                          onClick={() =>
+                                            audioRef.current.seekTo(
+                                              line.timestamp
+                                            )
+                                          }
+                                          data-text={String(line.timestamp)}
+                                        >
+                                          <span className="tracking-tight break-words hyphens-auto leading-tight">
+                                            {line.text ? (
+                                              <>{line.text}</>
+                                            ) : (
+                                              <></>
+                                            )}
+                                          </span>
+                                          {translationLine?.text && (
+                                            <span className="text-2xl md:text-2xl sm:text-3xl text-neutral-700 dark:text-neutral-300 font-medium leading-tight">
+                                              {translationLine.text}
+                                            </span>
+                                          )}
+                                        </p>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            </DrawerContent>
+                          </Drawer>
+                          <Button
+                            variant="ghost"
+                            className="size-10 p-0 items-center mt-6"
                             onClick={toggleLikeMusic}
                           >
                             {isLiked ? (
@@ -584,7 +681,7 @@ const Player = () => {
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
                                 fill="currentColor"
-                                className="w-6 h-6"
+                                className="size-6"
                               >
                                 <path
                                   fillRule="evenodd"
@@ -608,7 +705,7 @@ const Player = () => {
                                 />
                               </svg>
                             )}
-                          </button>
+                          </Button>
                         </div>
                       </div>
 
@@ -635,9 +732,9 @@ const Player = () => {
                         </div>
 
                         <div className="max-w-xs mx-auto flex flex-row justify-center mt-2">
-                          <div className={cn("flex flex-row mt-4")}>
+                          <div className={cn("items-center mt-6")}>
                             <Button
-                              className="size-12"
+                              className="size-8 p-0"
                               variant={
                                 playMode === "loop" ? "secondary" : "ghost"
                               }
@@ -647,15 +744,15 @@ const Player = () => {
                                 )
                               }
                             >
-                              <LoopIcon className="size-8" />
+                              <LoopIcon className="size-4" />
                             </Button>
                           </div>
 
                           <div>
-                            <div className="px-4 mt-2 mx-auto flex flex-row justify-between transition-all duration-500">
+                            <div className="px-4 mt-2 mx-auto flex flex-row space-x-2 justify-between transition-all duration-500">
                               <Button
                                 variant="ghost"
-                                className="hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 rounded-lg w-16 h-16 flex justify-center items-center"
+                                className="size-10 mt-3 p-0"
                                 onClick={() =>
                                   setCurrentSongIndex(
                                     (currentSongIndex - 1 + songIds.length) %
@@ -665,51 +762,43 @@ const Player = () => {
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  fill="currentColor"
-                                  className="size-12"
+                                  className="size-6"
+                                  viewBox="0 0 32 32"
                                 >
-                                  <path d="M9.195 18.44c1.25.714 2.805-.189 2.805-1.629v-2.34l6.945 3.968c1.25.715 2.805-.188 2.805-1.628V8.69c0-1.44-1.555-2.343-2.805-1.628L12 11.029v-2.34c0-1.44-1.555-2.343-2.805-1.628l-7.108 4.061c-1.26.72-1.26 2.536 0 3.256l7.108 4.061Z" />
+                                  <path
+                                    fill="currentColor"
+                                    d="M6 5a1 1 0 0 0-2 0v22a1 1 0 1 0 2 0zm22.003 1.504c0-2.002-2.236-3.192-3.897-2.073l-14.003 9.432A2.5 2.5 0 0 0 10.09 18l14.003 9.56c1.66 1.132 3.91-.056 3.91-2.065z"
+                                  />
                                 </svg>
                               </Button>
                               <Button
-                                className="size-16 flex justify-center items-center"
+                                className="size-12 mt-2 p-0"
                                 variant="ghost"
                                 onClick={() => setIsPlaying(!isPlaying)}
                               >
                                 {isPlaying === true ? (
                                   <svg
-                                    t="1692268156116"
-                                    fill="currentColor"
-                                    className="size-12"
-                                    viewBox="0 0 1024 1024"
-                                    version="1.1"
                                     xmlns="http://www.w3.org/2000/svg"
-                                    p-id="4153"
+                                    className="size-12 bi bi-pause-fill"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16"
                                   >
-                                    <path
-                                      d="M298.666667 196.266667c0-23.893333 0-35.84 4.650666-44.970667a42.666667 42.666667 0 0 1 18.645334-18.645333C331.093333 128 343.04 128 366.933333 128h34.133334c23.893333 0 35.84 0 44.970666 4.650667a42.666667 42.666667 0 0 1 18.645334 18.645333C469.333333 160.426667 469.333333 172.373333 469.333333 196.266667v588.8c0 23.893333 0 35.84-4.650666 44.970666a42.666667 42.666667 0 0 1-18.645334 18.645334C436.906667 853.333333 424.96 853.333333 401.066667 853.333333h-34.133334c-23.893333 0-35.84 0-44.970666-4.650666a42.666667 42.666667 0 0 1-18.645334-18.645334C298.666667 820.906667 298.666667 808.96 298.666667 785.066667V196.266667zM554.666667 196.266667c0-23.893333 0-35.84 4.650666-44.970667a42.666667 42.666667 0 0 1 18.645334-18.645333C587.093333 128 599.04 128 622.933333 128h34.133334c23.893333 0 35.84 0 44.970666 4.650667a42.666667 42.666667 0 0 1 18.645334 18.645333C725.333333 160.426667 725.333333 172.373333 725.333333 196.266667v588.8c0 23.893333 0 35.84-4.650666 44.970666a42.666667 42.666667 0 0 1-18.645334 18.645334C692.906667 853.333333 680.96 853.333333 657.066667 853.333333h-34.133334c-23.893333 0-35.84 0-44.970666-4.650666a42.666667 42.666667 0 0 1-18.645334-18.645334C554.666667 820.906667 554.666667 808.96 554.666667 785.066667V196.266667z"
-                                      p-id="4154"
-                                    ></path>
+                                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5" />
                                   </svg>
                                 ) : (
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
                                     fill="currentColor"
-                                    className="size-12"
+                                    className="size-12 bi bi-play-fill"
+                                    viewBox="0 0 16 16"
                                   >
-                                    <path
-                                      fillRule="evenodd"
-                                      d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-                                      clipRule="evenodd"
-                                    />
+                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                                   </svg>
                                 )}
                               </Button>
                               <Button
                                 variant="ghost"
-                                className="w-16 h-16 flex justify-center items-center"
+                                className="size-10 mt-3 p-0"
                                 onClick={() =>
                                   setCurrentSongIndex(
                                     (currentSongIndex + 1) % songIds.length
@@ -718,11 +807,13 @@ const Player = () => {
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  fill="currentColor"
-                                  className="size-12"
+                                  className="size-6"
+                                  viewBox="0 0 32 32"
                                 >
-                                  <path d="M5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256l-7.108-4.061C13.555 6.346 12 7.249 12 8.689v2.34L5.055 7.061Z" />
+                                  <path
+                                    fill="currentColor"
+                                    d="M26.002 5a1 1 0 1 1 2 0v22a1 1 0 0 1-2 0zM3.999 6.504c0-2.002 2.236-3.192 3.897-2.073l14.003 9.432A2.5 2.5 0 0 1 21.912 18L7.909 27.56c-1.66 1.132-3.91-.056-3.91-2.065z"
+                                  />
                                 </svg>
                               </Button>
                             </div>
@@ -730,11 +821,11 @@ const Player = () => {
 
                           <div
                             className={cn(
-                              "transition-all duration-500 flex flex-row mt-4"
+                              "transition-all duration-500 flex flex-row"
                             )}
                           >
                             <Button
-                              className="size-12"
+                              className="size-8 mt-6 p-0"
                               onClick={() =>
                                 setPlayMode(
                                   playMode === "shuffle" ? "default" : "shuffle"
@@ -744,21 +835,21 @@ const Player = () => {
                                 playMode === "shuffle" ? "secondary" : "ghost"
                               }
                             >
-                              <ShuffleIcon className="size-8" />
+                              <ShuffleIcon className="size-4" />
                             </Button>
                           </div>
                         </div>
-                        <div className="px-2 flex flex-row space-x-2 mt-2 justify-center items-center">
+                        <div className="px-2 flex flex-row space-x-2 mt-4 justify-center items-center">
                           <Button
                             variant="ghost"
                             onClick={() => setVolume(0)}
-                            className="rounded-lg size-12 flex justify-center items-center"
+                            className="size-8 p-0 flex justify-center items-center"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
                               fill="currentColor"
-                              className="size-8"
+                              className="size-4"
                             >
                               <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM17.78 9.22a.75.75 0 1 0-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 1 0 1.06-1.06L20.56 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-1.72 1.72-1.72-1.72Z" />
                             </svg>
@@ -778,13 +869,13 @@ const Player = () => {
                           <Button
                             variant="ghost"
                             onClick={() => setVolume(1)}
-                            className="rounded-lg size-12 flex justify-center items-center"
+                            className="size-8 p-0 flex justify-center items-center"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
                               fill="currentColor"
-                              className="size-8"
+                              className="size-4"
                             >
                               <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM18.584 5.106a.75.75 0 0 1 1.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 0 1-1.06-1.06 8.25 8.25 0 0 0 0-11.668.75.75 0 0 1 0-1.06Z" />
                               <path d="M15.932 7.757a.75.75 0 0 1 1.061 0 6 6 0 0 1 0 8.486.75.75 0 0 1-1.06-1.061 4.5 4.5 0 0 0 0-6.364.75.75 0 0 1 0-1.06Z" />
@@ -814,7 +905,7 @@ const Player = () => {
                           <p
                             key={index}
                             className={cn(
-                              "transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
+                              "text-balance transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
                               isHighlightedRow &&
                                 highlightedIndex !== -1 &&
                                 "font-medium text-[1.75rem] md:text-[32px] sm:text-[34px] blur-0",
@@ -842,9 +933,9 @@ const Player = () => {
                 </div>
               </div>
             </div>
-          </Drawer.Content>
-        </Drawer.Portal>
-      </Drawer.Root>
+          </DrawerContent>
+        </div>
+      </Drawer>
     </div>
   );
 };

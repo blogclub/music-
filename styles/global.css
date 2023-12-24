@@ -88,7 +88,7 @@
     font-family: "Geist", "Noto Sans SC", sans-serif;
     -webkit-font-smoothing: antialiased;
     font-weight: 500;
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground selection:bg-zinc-100 dark:selection:bg-zinc-900;
   }
 }
 

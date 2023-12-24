@@ -21,11 +21,12 @@ export default function Display({ source, type }) {
           source.map((source, index) => (
             <CarouselItem
               className={cn(
-                type === "playlist" && "basis-1/3",
-                type === "songs" && "basis-1/5",
-                type === "album" && "basis-1/5",
-                type === "artist" && "basis-1/5",
-                type === "mv" && "basis-1/2"
+                "",
+                type === "playlist" && "basis-[85%] md:basis-3/5 sm:basis-1/3",
+                type === "songs" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
+                type === "album" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
+                type === "artist" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
+                type === "mv" && "basis-[85%] md:basis-3/5 sm:basis-1/3"
               )}
             >
               {type === "playlist" && (
@@ -94,23 +95,26 @@ export default function Display({ source, type }) {
               )}
             </CarouselItem>
           ))}
-
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((index) => (
-          <CarouselItem
-            className={cn(
-              type === "playlist" && "basis-1/3",
-              type === "songs" && "basis-1/5",
-              type === "album" && "basis-1/5",
-              type === "artist" && "basis-1/5",
-              type === "mv" && "basis-1/2"
-            )}
-          >
-            <Skeleton
-              style={{ paddingBottom: "100%" }}
-              className="rounded-xl w-full h-auto"
-            />
-          </CarouselItem>
-        ))}
+        {(!source || source.length === 0) && (
+          <>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(() => (
+              <CarouselItem
+                className={cn(
+                  type === "playlist" && "basis-[85%] md:basis-3/5 sm:basis-1/3",
+                  type === "songs" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
+                  type === "album" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
+                  type === "artist" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
+                  type === "mv" && "basis-[85%] md:basis-3/5 sm:basis-1/3"
+                )}
+              >
+                <Skeleton
+                  style={{ paddingBottom: "100%" }}
+                  className="rounded-xl w-full h-auto"
+                />
+              </CarouselItem>
+            ))}
+          </>
+        )}
       </CarouselContent>
       <CarouselPrevious />
       <CarouselNext />

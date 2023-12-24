@@ -20,7 +20,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPlaylistLoading, setIsPlaylistLoading] = useState(false);
   const [tags, setTags] = useState([]);
-  const [selectedTag, setSelectedTag] = useState("欧美");
+  const [selectedTag, setSelectedTag] = useState("");
   const [tagedPlaylist, setTagedPlaylist] = useState([]);
   useEffect(() => {
     const fetchData = async () => {

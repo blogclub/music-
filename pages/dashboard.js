@@ -8,6 +8,7 @@ import moment from "moment";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Display from "@/components/layout/Carousel";
 import { Separator } from "@/components/ui/separator";
+import Spinner from "@/components/ui/spinner";
 
 export default function Dashboard() {
   const [userDetail, setUserDetail] = useState(null);
@@ -77,79 +78,81 @@ export default function Dashboard() {
   };
   return (
     <Container title="Dashboard">
-      {userDetail === null && (
-        <div className="animate-pulse">
-          <div className="w-full bg-neutral-200 dark:bg-neutral-800 relative h-[24rem] overflow-hidden"></div>
-          <div className="rounded-full absolute bg-white dark:bg-black p-2 ml-12 w-28 h-28 -mt-12"></div>
-        </div>
-      )}
+      {userDetail === null && <Spinner />}
       {userDetail !== null && (
-        <div>
-          <div className="relative h-full md:h-[24rem] sm:h-[24rem] overflow-hidden">
-            <LazyLoadImage
-              effect="blur"
-              className="w-full h-full object-cover"
-              src={userDetail.profile.backgroundUrl}
-            />
-          </div>
-          <div className="rounded-full absolute bg-white dark:bg-black p-2 ml-12 -mt-12">
-            <LazyLoadImage
-              effect="blur"
-              className="w-28 h-28 rounded-full"
-              src={userDetail.profile.avatarUrl}
-            />
-          </div>
-          <div className="mt-24 font-medium px-6 mb-16">
-            <h1 className="font-semibold text-xl md:text-2xl sm:text-3xl ml-6 mt-2">
-              {userDetail.profile.nickname}
-            </h1>
-            <p className="opacity-75 text-sm mt-1 ml-16">
-              Lv.{userDetail.level}
-            </p>
-            <p className="mt-6 text-lg text-neutral-600 dark:text-neutral-400">
-              {userDetail.profile.signature}
-            </p>
-            <p className="mt-4 text-lg">
-              Joined{" "}
-              <span className="font-bold">
-                {moment(userDetail.profile.createTime).format("YYYY年MM月DD日")}
-              </span>
-            </p>
-            <div className="mt-4 text-lg">
-              <span className="font-bold">{userDetail.profile.followeds}</span>{" "}
-              Followed·{" "}
-              <span className="font-bold"> {userDetail.profile.follows}</span>{" "}
-              Following
+        <>
+          {" "}
+          {userDetail !== null && (
+            <div>
+              <div className="relative h-full md:h-[24rem] sm:h-[24rem] overflow-hidden">
+                <LazyLoadImage
+                  effect="blur"
+                  className="w-full h-full object-cover"
+                  src={userDetail.profile.backgroundUrl}
+                />
+              </div>
+              <div className="rounded-full absolute bg-white dark:bg-black p-2 ml-12 -mt-12">
+                <LazyLoadImage
+                  effect="blur"
+                  className="w-28 h-28 rounded-full"
+                  src={userDetail.profile.avatarUrl}
+                />
+              </div>
+              <div className="mt-24 font-medium px-6 mb-16">
+                <h1 className="font-semibold text-xl md:text-2xl sm:text-3xl ml-6 mt-2">
+                  {userDetail.profile.nickname}
+                </h1>
+                <p className="opacity-75 text-sm mt-1 ml-16">
+                  Lv.{userDetail.level}
+                </p>
+                <p className="mt-6 text-lg text-neutral-600 dark:text-neutral-400">
+                  {userDetail.profile.signature}
+                </p>
+                <p className="mt-4 text-lg">
+                  Joined{" "}
+                  <span className="font-bold">
+                    {moment(userDetail.profile.createTime).format(
+                      "YYYY年MM月DD日"
+                    )}
+                  </span>
+                </p>
+                <div className="mt-4 text-lg">
+                  <span className="font-bold">
+                    {userDetail.profile.followeds}
+                  </span>{" "}
+                  Followed·{" "}
+                  <span className="font-bold">
+                    {" "}
+                    {userDetail.profile.follows}
+                  </span>{" "}
+                  Following
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+          <br />
+          <>
+            <h2>Favorited Playlists</h2>
+            <h6 className="mb-2">Songs You Like.</h6>
+            <Separator />
+            <Display type="playlist" source={playlists} />
+          </>
+          <br />
+          <>
+            <h2>Favorited Artists</h2>
+            <h6 className="mb-2">Artists You Like.</h6>
+            <Separator />
+            <Display type="artist" source={artist} />
+          </>
+          <br />
+          <>
+            <h2>Favorited Music Videos</h2>
+            <h6 className="mb-2">Music Videos You Like.</h6>
+            <Separator />
+            <Display type="mv" source={mv} />
+          </>
+        </>
       )}
-      <br />
-
-      <>
-        <h2>Favorited Playlists</h2>
-        <h6 className="mb-2">Songs You Like.</h6>
-        <Separator />
-        <Display type="playlist" source={playlists} />
-      </>
-
-      <br />
-
-      <>
-        <h2>Favorited Artists</h2>
-        <h6 className="mb-2">Artists You Like.</h6>
-        <Separator />
-        <Display type="artist" source={artist} />
-      </>
-
-      <br />
-
-      <>
-        <h2>Favorited Music Videos</h2>
-        <h6 className="mb-2">Music Videos You Like.</h6>
-        <Separator />
-        <Display type="mv" source={mv} />
-      </>
     </Container>
   );
 }

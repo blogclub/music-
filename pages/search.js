@@ -6,6 +6,7 @@ import Display from "@/components/layout/Carousel";
 import { Separator } from "@/components/ui/separator";
 
 import site from "@/lib/site.config";
+import Spinner from "@/components/ui/spinner";
 
 const MusicSearch = () => {
   const router = useRouter();
@@ -149,6 +150,10 @@ const MusicSearch = () => {
     };
 
     fetchData();
+
+    return () => {
+      setSongDetail([]); // 清除songDetail的内容
+    };
   }, [keywords]);
 
   const {
@@ -172,26 +177,29 @@ const MusicSearch = () => {
 
   return (
     <Container title={keywords && `Search Result of ${keywords}`}>
-      <>
-        <h1 className="mb-2">Result of '{keywords}'</h1>
-        <Separator />
-        <h2 className="mt-4">Songs</h2>
-        <h6 className="mb-2">Singles</h6>
-        <Separator />
-        <Display source={songDetail} type="songs" />
-        <h2 className="mt-4 mb-2">Playlists</h2>
-        <Separator />
-        <Display source={playlistDetail} type="playlist" />
-        <h2 className="mt-4 mb-2">Albums</h2>
-        <Separator />
-        <Display source={albumDetail} type="album" />
-        <h2 className="mt-4 mb-2">Artists</h2>
-        <Separator />
-        <Display source={artistDetail} type="artist" />
-        <h2 className="mt-4 mb-2">Music Video</h2>
-        <Separator />
-        <Display source={mvDetail} type="mv" />
-      </>
+      {!songDetail.length && <Spinner />}
+      {songDetail.length !== 0 && (
+        <>
+          <h1 className="mb-2">Result of '{keywords}'</h1>
+          <Separator />
+          <h2 className="mt-4">Songs</h2>
+          <h6 className="mb-2">Singles</h6>
+          <Separator />
+          <Display source={songDetail} type="songs" />
+          <h2 className="mt-4 mb-2">Playlists</h2>
+          <Separator />
+          <Display source={playlistDetail} type="playlist" />
+          <h2 className="mt-4 mb-2">Albums</h2>
+          <Separator />
+          <Display source={albumDetail} type="album" />
+          <h2 className="mt-4 mb-2">Artists</h2>
+          <Separator />
+          <Display source={artistDetail} type="artist" />
+          <h2 className="mt-4 mb-2">Music Video</h2>
+          <Separator />
+          <Display source={mvDetail} type="mv" />
+        </>
+      )}
 
       <br />
     </Container>

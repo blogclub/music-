@@ -1,7 +1,8 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { PlayIcon } from "@radix-ui/react-icons";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "../button";
 
 export default function PlCard({
   picUrl,
@@ -16,7 +17,7 @@ export default function PlCard({
 
   function formatPlayCount(playCount) {
     if (playCount >= 1000) {
-      return (playCount / 1000).toFixed(0) + "k";
+      return (playCount / 1000).toFixed(1) + "k";
     } else {
       return playCount.toString();
     }
@@ -26,18 +27,36 @@ export default function PlCard({
       key={index}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      className="relative cursor-pointer w-full"
+      className="relative cursor-pointer w-full h-full"
       onClick={() => router.push(`/playlist?id=${id}`)}
     >
-      <div className="hover:brightness-75 hover:scale-[1.01] transition-all w-full relative">
+      <AspectRatio ratio={1 / 1} className="">
         <LazyLoadImage
           effect="blur"
           src={`${picUrl}?param=512y512`}
-          className="object-cover w-full transition-all  bg-neutral-200 dark:bg-neutral-800 rounded-xl"
+          className="hover:brightness-75 object-cover hover:scale-[1.01] min-w-64 md:min-w-72 sm:min-w-96 w-full h-auto transition-all  bg-neutral-200 dark:bg-neutral-800 rounded-xl"
         />
-      </div>
+      </AspectRatio>
 
-      <div className="text-sm">
+      {isHover && (
+        <Button onClick={() => router.push(`/playlist?id=${id}`)} className="absolute inset-0 w-1/2 mx-auto my-auto transition-all duration-500 rounded-3xl">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="size-4 mr-2"
+          >
+            <path
+              fillRule="evenodd"
+              d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Listen Now
+        </Button>
+      )}
+
+      <div className="text-sm mt-4">
         <div className="flex flex-row text-xs text-neutral-600 dark:text-neutral-400">
           <div className="font-normal">
             Played {formatPlayCount(playCount)} times
