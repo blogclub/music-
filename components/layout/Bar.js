@@ -74,7 +74,7 @@ export default function Bar() {
     removeAllFromPlaylist();
   };
   return (
-    <Menubar className="px-4 rounded-none border-b py-2 sticky w-full top-0">
+    <Menubar className="px-4 rounded-none border-x-0 border-t-0 border-b py-2 sticky w-full top-0">
       <MenubarMenu>
         <MenubarTrigger>Discover</MenubarTrigger>
         <MenubarContent>
@@ -131,10 +131,10 @@ export default function Bar() {
                     key={song.id}
                     onMouseEnter={() => handleMouseEnter(song.id)}
                     onMouseLeave={handleMouseLeave}
-                    className="flex flex-row justify-between transition-all"
+                    className="flex flex-row justify-between transition-all "
                   >
                     <span className="w-full">{song.name}</span>
-                    <div className="w-24 flex flex-row justify-end transition-all">
+                    <div className="w-24 flex flex-row justify-end transition-all duration-500 space-x-1">
                       {(isHovered || window.innerWidth < 1360) && (
                         <>
                           <Button
