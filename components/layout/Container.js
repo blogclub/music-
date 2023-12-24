@@ -7,7 +7,7 @@ export default function Container({ title, children }) {
         <title>{title}</title>
       </Head>
      
-      <div className="mb-8">
+      <div className="mb-20 sm:mb-8">
         {children}
       </div>
     </div>
