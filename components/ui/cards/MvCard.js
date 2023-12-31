@@ -25,11 +25,12 @@ export default function MvCard({ picUrl, name, id, index, ar }) {
         onClick={() => router.push(`/mv?id=${id}`)}
           className="absolute inset-0 w-2/5 mx-auto my-auto transition-all duration-500 rounded-3xl"
         >
+           现在观看
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="size-4 mr-2"
+            className="size-4 ml-2"
           >
             <path
               fillRule="evenodd"
@@ -37,7 +38,6 @@ export default function MvCard({ picUrl, name, id, index, ar }) {
               clipRule="evenodd"
             />
           </svg>
-          Watch Now
         </Button>
       )}
 

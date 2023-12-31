@@ -148,18 +148,18 @@ export default function ListenNow() {
     }
   };
   return (
-    <Container title="Listen Now">
+    <Container title="现在就听">
       {userData && (
         <>
-          <h1>Listen Now</h1>
-          <h6 className="mb-2">Daily Recommendation, Made for You.</h6>
+          <h1>现在就听</h1>
+          <h6 className="mb-2">每日推荐好音乐，您的专属.</h6>
           <Separator />
-          <h2 className="mt-4">Playlists</h2>
-          <h6 className="mb-2">Your favorite, updated daily.</h6>
+          <h2 className="mt-4">歌单</h2>
+          <h6 className="mb-2">你的最爱，每日更新.</h6>
           <Separator />
           <Display source={playlist} type="playlist" />
-          <h2 className="mt-4">Songs</h2>
-          <h6 className="mb-2">Your favorite, updated daily.</h6>
+          <h2 className="mt-4">歌曲</h2>
+          <h6 className="mb-2">你的最爱，每日更新.</h6>
           <Separator />
 
           <Display source={songs} type="songs" />
@@ -169,7 +169,7 @@ export default function ListenNow() {
       <br />
 
       {!userData && (
-        <div className="font-medium text-center">Please Login First.</div>
+        <div className="font-medium text-center">请先登录.</div>
       )}
     </Container>
   );

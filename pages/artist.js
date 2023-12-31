@@ -54,7 +54,7 @@ export default function Artist() {
       const getArMVs = async () => {
         try {
           const arMVsResponse = await axios.get(
-            `${site.api}/artist/mv?id=${id}`
+            `${site.api}/artist/mv?id=${id}&limit=100`
           );
           if (arMVsResponse.data.code === 200) {
             setArMVs(arMVsResponse.data.mvs);
@@ -137,33 +137,33 @@ export default function Artist() {
               </div>
             </div>
           </Card>
-          <h2 className="mt-4">Short Description</h2>
-          <h6 className="mb-2">Get to Know This Artist.</h6>
+          <h2 className="mt-4">简介</h2>
+          <h6 className="mb-2">了解这个艺术家.</h6>
           <Separator />
           <p className="mt-6 text-sm md:text-base sm:text-lg text-neutral-600 dark:text-neutral-400">
             {arData.briefDesc}
           </p>
 
-          <h2 className="mt-4">Singles</h2>
-          <h6 className="mb-2">50 Top Songs.</h6>
+          <h2 className="mt-4">单曲</h2>
+          <h6 className="mb-2">50首热门单曲.</h6>
           <Separator />
 
           <Display type="songs" source={arSongs} />
-          <h2 className="mt-4">Music Videos</h2>
-          <h6 className="mb-2">Hot Hot Hot.</h6>
+          <h2 className="mt-4">音乐视频</h2>
+          <h6 className="mb-2">火热视频.</h6>
           <Separator />
 
           <Display type="mv" source={arMVs} />
-          <h2 className="mt-4">Albums</h2>
-          <h6 className="mb-2">Somebody's Favorite.</h6>
+          <h2 className="mt-4">专辑</h2>
+          <h6 className="mb-2">可能是你的珍藏.</h6>
           <Separator />
 
           <Display type="album" source={arAlbums} />
 
           {similarArtists !== null && similarArtists && (
             <>
-              <h2 className="mt-4">Similar</h2>
-              <h6 className="mb-2">You May Also Like.</h6>
+              <h2 className="mt-4">相似艺术家</h2>
+              <h6 className="mb-2">你可能也会喜欢.</h6>
               <Separator />
 
               <Display type="artist" source={similarArtists} />

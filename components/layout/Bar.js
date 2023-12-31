@@ -74,18 +74,18 @@ export default function Bar() {
     removeAllFromPlaylist();
   };
   return (
-    <Menubar className="px-4 rounded-none border-x-0 border-t-0 border-b py-2 sticky w-full top-0">
+    <Menubar className="px-4 rounded-none border-x-0 border-t-0 border-b py-2 fixed w-full top-0 z-[999999]">
       <MenubarMenu>
-        <MenubarTrigger>Discover</MenubarTrigger>
+        <MenubarTrigger>发现</MenubarTrigger>
         <MenubarContent>
           <MenubarItem onClick={() => router.push("/listen-now")}>
-            Listen Now
+            现在就听
           </MenubarItem>
           <MenubarItem onClick={() => router.push("/explore")}>
-            Explore
+            浏览
           </MenubarItem>
           <MenubarItem disabled={true}>
-            Broadcast<Badge className="ml-1">Soon</Badge>
+            电台<Badge className="ml-1">即将推出</Badge>
           </MenubarItem>
           <MenubarSeparator />
           <Input
@@ -94,32 +94,32 @@ export default function Bar() {
             type="search"
             onKeyPress={handleKeyPress}
             className=""
-            placeholder="Search..."
+            placeholder="搜索..."
           />
         </MenubarContent>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger>Account</MenubarTrigger>
+        <MenubarTrigger>账户</MenubarTrigger>
         <MenubarContent>
-          <MenubarItem onClick={() => router.push("/login")}>Login</MenubarItem>
+          <MenubarItem onClick={() => router.push("/login")}>登录</MenubarItem>
           <MenubarItem onClick={() => router.push("/dashboard")}>
-            Dashboard
+            仪表盘
           </MenubarItem>
           <MenubarItem disabled={true}>
-            Settings<Badge className="ml-1">Soon</Badge>
+            设置<Badge className="ml-1">即将推出</Badge>
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger>Theme</MenubarTrigger>
+        <MenubarTrigger>主题</MenubarTrigger>
         <MenubarContent>
-          <MenubarItem onClick={() => setTheme("system")}>System</MenubarItem>
-          <MenubarItem onClick={() => setTheme("light")}>Light</MenubarItem>
-          <MenubarItem onClick={() => setTheme("dark")}>Dark</MenubarItem>
+          <MenubarItem onClick={() => setTheme("system")}>系统</MenubarItem>
+          <MenubarItem onClick={() => setTheme("light")}>明亮</MenubarItem>
+          <MenubarItem onClick={() => setTheme("dark")}>黑暗</MenubarItem>
         </MenubarContent>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger>Playlist</MenubarTrigger>
+        <MenubarTrigger>播放列表</MenubarTrigger>
         <MenubarContent className="w-80 sm:w-96">
           <ScrollArea className="w-full h-96">
             {playlistDetails &&
@@ -178,7 +178,7 @@ export default function Bar() {
               })}
           </ScrollArea>
           <MenubarSeparator />
-          <MenubarItem onClick={() => handleRemoveAll}>Remove All</MenubarItem>
+          <MenubarItem onClick={() => handleRemoveAll}>移除全部</MenubarItem>
         </MenubarContent>
       </MenubarMenu>
     </Menubar>

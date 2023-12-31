@@ -183,8 +183,8 @@ export default function QrLogin() {
         />
       )}
 
-      <div className="">
-        <h1>Login</h1>
+      <div className="text-center">
+        <h1 className="text-center">登录</h1>
       </div>
       <div className="max-w-sm">
         {/* 手机号登录表单 */}
@@ -192,15 +192,15 @@ export default function QrLogin() {
           <>
             <div className="mt-4 *:mb-1">
               <Input
-                type="text"
-                placeholder="Phone Number"
+                type="number"
+                placeholder="手机号"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-           
+
               <Input
                 type="password"
-                placeholder="Password"
+                placeholder="密码"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -213,49 +213,48 @@ export default function QrLogin() {
           <>
             <div className="mt-4 *:mb-1">
               <Input
-                type="text"
-                placeholder="Phone Number"
+                type="number"
+                placeholder="手机号"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
               <div className="flex flex-row relative">
                 <Input
-                  type="text"
-                  placeholder="Verification Code"
+                  type="number"
+                  placeholder="验证码"
                   value={verificationCode}
                   onChange={(e) => setVerificationCode(e.target.value)}
                 />
-                <button
+                <Button
                   onClick={sendVerificationCode}
                   disabled={countdown > 0}
+                  variant="secondary"
                   className={cn(
-                    "absolute right-1 top-1.5 font-medium rounded-md text-sm px-4 py-1.5 text-neutral-600 dark:text-neutral-400",
+                    "absolute right-0 top-0 font-medium text-sm px-4 py-1 text-neutral-600 dark:text-neutral-400",
                     countdown > 0
                       ? "opacity-75 bg-neutral-100 dark:bg-neutral-900 "
                       : "bg-neutral-200 dark:bg-neutral-800"
                   )}
                 >
-                  {countdown > 0 ? `${countdown}s` : "Send"}
-                </button>
+                  {countdown > 0 ? `${countdown}s` : "发送"}
+                </Button>
               </div>
             </div>
           </>
         )}
         <div className="max-w-sm flex flex-col mt-4">
           {/* 登录按钮 */}
-          {loginMethod !== "qr" && (
-            <Button onClick={handleLogin}>Login</Button>
-          )}
+          {loginMethod !== "qr" && <Button onClick={handleLogin}>登录</Button>}
 
           {loginMethod === "phone" && (
             <Button variant="ghost" onClick={() => setLoginMethod("captcha")}>
-              Login with Verification Code
+              用验证码登录
             </Button>
           )}
 
           {loginMethod === "captcha" && (
             <Button variant="ghost" onClick={() => setLoginMethod("phone")}>
-              Login with Password
+              用密码登录
             </Button>
           )}
         </div>

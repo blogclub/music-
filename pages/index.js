@@ -1,3 +1,4 @@
+import Spinner from "@/components/ui/spinner";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -19,7 +20,11 @@ const RedirectPage = () => {
     return () => clearTimeout(redirectTimer);
   }, []);
 
-  return <div></div>;
+  return (
+    <div>
+      <Spinner />
+    </div>
+  );
 };
 
 export default RedirectPage;

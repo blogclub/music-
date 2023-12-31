@@ -176,26 +176,31 @@ const MusicSearch = () => {
   };
 
   return (
-    <Container title={keywords && `Search Result of ${keywords}`}>
+    <Container title={keywords && `'${keywords}'的搜索结果`}>
       {!songDetail.length && <Spinner />}
       {songDetail.length !== 0 && (
         <>
-          <h1 className="mb-2">Result of '{keywords}'</h1>
+          <h1 className="mb-2">
+            <span className="text-neutral-600 dark:text-neutral-400">
+              '{keywords}'
+            </span>
+            的搜索结果
+          </h1>
           <Separator />
-          <h2 className="mt-4">Songs</h2>
+          <h2 className="mt-4">单曲</h2>
           <h6 className="mb-2">Singles</h6>
           <Separator />
           <Display source={songDetail} type="songs" />
-          <h2 className="mt-4 mb-2">Playlists</h2>
+          <h2 className="mt-4 mb-2">歌单</h2>
           <Separator />
           <Display source={playlistDetail} type="playlist" />
-          <h2 className="mt-4 mb-2">Albums</h2>
+          <h2 className="mt-4 mb-2">专辑</h2>
           <Separator />
           <Display source={albumDetail} type="album" />
-          <h2 className="mt-4 mb-2">Artists</h2>
+          <h2 className="mt-4 mb-2">艺术家</h2>
           <Separator />
           <Display source={artistDetail} type="artist" />
-          <h2 className="mt-4 mb-2">Music Video</h2>
+          <h2 className="mt-4 mb-2">音乐视频</h2>
           <Separator />
           <Display source={mvDetail} type="mv" />
         </>

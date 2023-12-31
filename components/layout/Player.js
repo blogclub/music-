@@ -19,6 +19,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Button } from "../ui/button";
 import { LoopIcon, ShuffleIcon } from "@radix-ui/react-icons";
 import { Card } from "../ui/card";
+import { ScrollArea } from "../ui/scroll-area";
 
 const Player = () => {
   const [lyrics, setLyrics] = useState([]);
@@ -554,7 +555,7 @@ const Player = () => {
           </Card>
         </DrawerTrigger>
         <div>
-          <DrawerContent className="z-[99999999] bg-white dark:bg-black text-black dark:text-white flex flex-col rounded-t-xl h-screen mt-24 fixed bottom-0 left-0 right-0 border-neutral-800 focus:outline-none">
+          <DrawerContent className="z-[99999999] bg-white dark:bg-zinc-950 text-black dark:text-white flex flex-col rounded-t-xl h-screen mt-24 fixed bottom-0 left-0 right-0 border-neutral-800 focus:outline-none">
             <div className="p-0 md:p-2 sm:p-4 bg-white dark:bg-zinc-950 flex-1">
               <DrawerClose asChild>
                 <Button
@@ -611,7 +612,7 @@ const Player = () => {
                                 </svg>
                               </Button>
                             </DrawerTrigger>
-                            <DrawerContent className="z-[99999999999999]"> 
+                            <DrawerContent className="z-[99999999999999]">
                               <div className="block md:hidden sm:hidden w-full h-[80vh] overflow-y-auto">
                                 <div className="py-4 overflow-y-auto select-none mt-8">
                                   <div
@@ -640,9 +641,9 @@ const Player = () => {
                                             "text-balance transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
                                             isHighlightedRow &&
                                               highlightedIndex !== -1 &&
-                                              "font-medium text-[1.75rem] md:text-[32px] sm:text-[34px] blur-0",
+                                              "font-medium text-[28px] blur-0",
                                             !isHighlightedRow &&
-                                              "opacity-50 text-[28px] sm:text-[30px] font-medium"
+                                              "opacity-50 text-[26px] font-medium"
                                           )}
                                           onClick={() =>
                                             audioRef.current.seekTo(
@@ -659,7 +660,7 @@ const Player = () => {
                                             )}
                                           </span>
                                           {translationLine?.text && (
-                                            <span className="text-2xl md:text-2xl sm:text-3xl text-neutral-700 dark:text-neutral-300 font-medium leading-tight">
+                                            <span className="text-[26px] text-neutral-700 dark:text-neutral-300 font-medium leading-tight">
                                               {translationLine.text}
                                             </span>
                                           )}
@@ -711,7 +712,7 @@ const Player = () => {
 
                       <div className="px-2">
                         <div className="flex mx-auto mt-2 flex-row justify-between">
-                          <div className="text-xs md:text-sm sm:text-sm opacity-75">
+                          <div className="w-10 text-xs md:text-sm sm:text-sm opacity-75">
                             {formatTime(currentTime)}
                           </div>
                           <Slider
@@ -726,7 +727,7 @@ const Player = () => {
                             onPointerUp={handleSeek}
                           />
 
-                          <div className="text-xs md:text-sm sm:text-sm opacity-75">
+                          <div className="w-10 text-xs md:text-sm sm:text-sm opacity-75">
                             -{formatTime(remainingTime)}
                           </div>
                         </div>
@@ -887,49 +888,57 @@ const Player = () => {
                   ))}
                 </div>
                 <div className="hidden md:block sm:block w-1/2 h-screen overflow-y-auto">
-                  <div className="py-4 overflow-y-auto select-none my-56">
-                    <div ref={lyricsContainerRef} style={{ maxHeight: "100%" }}>
-                      {lyrics.map((line, index) => {
-                        const translationLine = translatedLyrics.find(
-                          (translatedLine) =>
-                            translatedLine.timestamp === line.timestamp &&
-                            line.text !== ""
-                        );
-                        const highlightedIndex = lyrics.findIndex(
-                          (lyric) =>
-                            lyric.text === highlightedLine &&
-                            lyric.timestamp === highlightedLineTimestamp
-                        );
-                        const isHighlightedRow = index === highlightedIndex;
-                        return (
-                          <p
-                            key={index}
-                            className={cn(
-                              "text-balance transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
-                              isHighlightedRow &&
-                                highlightedIndex !== -1 &&
-                                "font-medium text-[1.75rem] md:text-[32px] sm:text-[34px] blur-0",
-                              !isHighlightedRow &&
-                                "opacity-50 text-[28px] sm:text-[30px] font-medium"
-                            )}
-                            onClick={() =>
-                              audioRef.current.seekTo(line.timestamp)
-                            }
-                            data-text={String(line.timestamp)}
-                          >
-                            <span className="tracking-tight break-words hyphens-auto leading-tight">
-                              {line.text ? <>{line.text}</> : <></>}
-                            </span>
-                            {translationLine?.text && (
-                              <span className="text-2xl md:text-2xl sm:text-3xl text-neutral-700 dark:text-neutral-300 font-medium leading-tight">
-                                {translationLine.text}
+                  <ScrollArea className="h-screen relative">
+                    <div className="fixed w-full top-0 bg-gradient-to-b from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-24 z-[9999999999999]" />
+                    <div className="fixed w-full bottom-0 bg-gradient-to-t from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-24 z-[9999999999999]" />
+                    <div className="py-4 overflow-y-auto select-none my-56">
+                      <div
+                        ref={lyricsContainerRef}
+                        style={{ maxHeight: "100%" }}
+                      >
+                        {lyrics.map((line, index) => {
+                          const translationLine = translatedLyrics.find(
+                            (translatedLine) =>
+                              translatedLine.timestamp === line.timestamp &&
+                              line.text !== ""
+                          );
+                          const highlightedIndex = lyrics.findIndex(
+                            (lyric) =>
+                              lyric.text === highlightedLine &&
+                              lyric.timestamp === highlightedLineTimestamp
+                          );
+                          const isHighlightedRow = index === highlightedIndex;
+                          return (
+                            <p
+                              key={index}
+                              className={cn(
+                                line.text !== "" &&
+                                "text-balance transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
+                                isHighlightedRow &&
+                                  highlightedIndex !== -1 &&
+                                  "font-medium text-[1.75rem] md:text-[32px] sm:text-[34px] blur-0",
+                                !isHighlightedRow &&
+                                  "opacity-50 text-[28px] sm:text-[30px] font-medium"
+                              )}
+                              onClick={() =>
+                                audioRef.current.seekTo(line.timestamp)
+                              }
+                              data-text={String(line.timestamp)}
+                            >
+                              <span className="tracking-tight break-words hyphens-auto leading-tight">
+                                {line.text ? <>{line.text}</> : <></>}
                               </span>
-                            )}
-                          </p>
-                        );
-                      })}
-                    </div>
-                  </div>
+                              {translationLine?.text && (
+                                <span className="text-2xl md:text-2xl sm:text-3xl text-neutral-700 dark:text-neutral-300 font-medium leading-tight">
+                                  {translationLine.text}
+                                </span>
+                              )}
+                            </p>
+                          );
+                        })}
+                      </div>
+                    </div>{" "}
+                  </ScrollArea>
                 </div>
               </div>
             </div>

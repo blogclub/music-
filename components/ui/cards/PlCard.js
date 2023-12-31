@@ -17,7 +17,7 @@ export default function PlCard({
 
   function formatPlayCount(playCount) {
     if (playCount >= 1000) {
-      return (playCount / 1000).toFixed(1) + "k";
+      return (playCount / 1000).toFixed(1) + "千";
     } else {
       return playCount.toString();
     }
@@ -40,11 +40,12 @@ export default function PlCard({
 
       {isHover && (
         <Button onClick={() => router.push(`/playlist?id=${id}`)} className="absolute inset-0 w-1/2 mx-auto my-auto transition-all duration-500 rounded-3xl">
+          现在就听
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="size-4 mr-2"
+            className="size-4 ml-2"
           >
             <path
               fillRule="evenodd"
@@ -52,14 +53,13 @@ export default function PlCard({
               clipRule="evenodd"
             />
           </svg>
-          Listen Now
         </Button>
       )}
 
       <div className="text-sm mt-4">
         <div className="flex flex-row text-xs text-neutral-600 dark:text-neutral-400">
           <div className="font-normal">
-            Played {formatPlayCount(playCount)} times
+            {formatPlayCount(playCount)}次播放
           </div>
         </div>
         <h5 className="font-medium px-1">

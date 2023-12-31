@@ -25,10 +25,10 @@ export default function Sidebar() {
   };
   const cookie = localStorage.getItem("cookie");
   return (
-    <div className="fixed left-0 hidden md:block sm:block w-0 md:w-[30%] sm:w-1/5 py-8 h-screen border-r">
-      <div className="px-8">
-        <h1 className="text-xl">Discover</h1>
-        <h6 className="mb-2">Listen Worldwide.</h6>
+    <div className="hidden md:block sm:block w-0 md:w-[30%] sm:w-1/5 py-8 h-screen border-r">
+      <div className="mt-8 px-8">
+        <h1 className="text-xl">发现</h1>
+        <h6 className="mb-2">探索全球曲风.</h6>
         <Separator />
       </div>
 
@@ -57,7 +57,7 @@ export default function Sidebar() {
               d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z"
             />
           </svg>
-          Listen Now
+          现在就听
         </Button>
         <Button
           variant={router.asPath === "/explore" ? "secondary" : "ghost"}
@@ -65,7 +65,7 @@ export default function Sidebar() {
           className="px-8 py-2"
         >
           <DashboardIcon className="mr-2 size-4" />
-          Explore
+          浏览
         </Button>
         <Button
           disabled={true}
@@ -86,8 +86,8 @@ export default function Sidebar() {
             <circle cx="12" cy="12" r="2" />
             <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14" />
           </svg>
-          Broadcast
-          <Badge className="ml-2">Soon</Badge>
+          电台
+          <Badge className="ml-2">即将推出</Badge>
         </Button>
       </div>
 
@@ -98,13 +98,13 @@ export default function Sidebar() {
           type="search"
           onKeyPress={handleKeyPress}
           className=""
-          placeholder="Search..."
+          placeholder="搜索..."
         />
       </div>
 
       <div className="px-8">
-        <h1 className="text-xl">Account</h1>
-        <h6 className="mb-2">Your Profile.</h6>
+        <h1 className="text-xl">账户</h1>
+        <h6 className="mb-2">您的个人信息.</h6>
         <Separator />
       </div>
 
@@ -116,7 +116,7 @@ export default function Sidebar() {
             className="px-8 py-2"
           >
             <DashboardIcon className="mr-2 size-4" />
-            Dashboard
+            仪表盘
           </Button>
         ) : (
           <Button
@@ -125,7 +125,7 @@ export default function Sidebar() {
             className="px-8 py-2"
           >
             <DashboardIcon className="mr-2 size-4" />
-            Login
+           登录
           </Button>
         )}
 
@@ -148,14 +148,14 @@ export default function Sidebar() {
               clipRule="evenodd"
             />
           </svg>
-          Settings
-          <Badge className="ml-2">Soon</Badge>
+          设置
+          <Badge className="ml-2">即将推出</Badge>
         </Button>
       </div>
 
       <div className="px-8 mt-6">
-        <h1 className="text-xl">Theme</h1>
-        <h6 className="mb-2">Change your preference.</h6>
+        <h1 className="text-xl">主题</h1>
+        <h6 className="mb-2">更改您的偏好设置.</h6>
         <Separator />
       </div>
 
@@ -166,7 +166,7 @@ export default function Sidebar() {
           className="px-8 py-2"
         >
           <GlobeIcon className="mr-2 size-4" />
-          System Default
+          系统默认
         </Button>
         <Button
           variant={theme === "light" ? "secondary" : "ghost"}
@@ -174,7 +174,7 @@ export default function Sidebar() {
           className="px-8 py-2"
         >
           <SunIcon className="mr-2 size-4" />
-          Light Mode
+          明亮模式
         </Button>
         <Button
           variant={theme === "dark" ? "secondary" : "ghost"}
@@ -182,7 +182,7 @@ export default function Sidebar() {
           className="px-8 py-2"
         >
           <MoonIcon className="mr-2 size-4" />
-          Dark Mode
+          黑暗模式
         </Button>
       </div>
     </div>

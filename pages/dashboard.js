@@ -9,6 +9,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import Display from "@/components/layout/Carousel";
 import { Separator } from "@/components/ui/separator";
 import Spinner from "@/components/ui/spinner";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function Dashboard() {
   const [userDetail, setUserDetail] = useState(null);
@@ -77,77 +79,63 @@ export default function Dashboard() {
     router.reload();
   };
   return (
-    <Container title="Dashboard">
+    <Container title="仪表盘">
       {userDetail === null && <Spinner />}
       {userDetail !== null && (
         <>
-          {" "}
-          {userDetail !== null && (
-            <div>
-              <div className="relative h-full md:h-[24rem] sm:h-[24rem] overflow-hidden">
-                <LazyLoadImage
-                  effect="blur"
-                  className="w-full h-full object-cover"
-                  src={userDetail.profile.backgroundUrl}
-                />
-              </div>
-              <div className="rounded-full absolute bg-white dark:bg-black p-2 ml-12 -mt-12">
-                <LazyLoadImage
-                  effect="blur"
-                  className="w-28 h-28 rounded-full"
-                  src={userDetail.profile.avatarUrl}
-                />
-              </div>
-              <div className="mt-24 font-medium px-6 mb-16">
-                <h1 className="font-semibold text-xl md:text-2xl sm:text-3xl ml-6 mt-2">
-                  {userDetail.profile.nickname}
-                </h1>
-                <p className="opacity-75 text-sm mt-1 ml-16">
-                  Lv.{userDetail.level}
-                </p>
-                <p className="mt-6 text-lg text-neutral-600 dark:text-neutral-400">
-                  {userDetail.profile.signature}
-                </p>
-                <p className="mt-4 text-lg">
-                  Joined{" "}
-                  <span className="font-bold">
-                    {moment(userDetail.profile.createTime).format(
-                      "YYYY年MM月DD日"
-                    )}
-                  </span>
-                </p>
-                <div className="mt-4 text-lg">
-                  <span className="font-bold">
-                    {userDetail.profile.followeds}
-                  </span>{" "}
-                  Followed·{" "}
-                  <span className="font-bold">
-                    {" "}
-                    {userDetail.profile.follows}
-                  </span>{" "}
-                  Following
-                </div>
+          <Card>
+            <p className="mt-4 text-sm text-center text-neutral-500">
+              加入于
+              <span className="font-bold">
+                {moment(userDetail.profile.createTime).format("YYYY年MM月DD日")}
+              </span>
+            </p>
+            <div className="flex justify-center h-80">
+              <LazyLoadImage
+                effect="blur"
+                className="rounded-full w-72 mt-6"
+                src={`${userDetail.profile.avatarUrl}?param=256y256`}
+              />
+            </div>
+            <div className="mt-8 px-16 py-8 flex flex-row justify-between">
+              <h1 className="items-center">
+                {userDetail.profile.nickname}
+                <Badge className="ml-2 -mt-4 rounded-full">Lv.{userDetail.level}</Badge>
+              </h1>
+              <div className="items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="size-10"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm14.024-.983a1.125 1.125 0 0 1 0 1.966l-5.603 3.113A1.125 1.125 0 0 1 9 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </div>
             </div>
-          )}
+          </Card>
           <br />
           <>
-            <h2>Favorited Playlists</h2>
-            <h6 className="mb-2">Songs You Like.</h6>
+            <h2>收藏的歌单</h2>
+            <h6 className="mb-2">你喜欢的音乐.</h6>
             <Separator />
             <Display type="playlist" source={playlists} />
           </>
           <br />
           <>
-            <h2>Favorited Artists</h2>
-            <h6 className="mb-2">Artists You Like.</h6>
+            <h2>关注的艺术家</h2>
+            <h6 className="mb-2">你喜欢的艺术家.</h6>
             <Separator />
             <Display type="artist" source={artist} />
           </>
           <br />
           <>
-            <h2>Favorited Music Videos</h2>
-            <h6 className="mb-2">Music Videos You Like.</h6>
+            <h2>收藏的音乐视频</h2>
+            <h6 className="mb-2">你喜欢的音乐视频.</h6>
             <Separator />
             <Display type="mv" source={mv} />
           </>
