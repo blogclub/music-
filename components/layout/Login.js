@@ -181,7 +181,12 @@ export default function Login({ type }) {
             准备好你的密码，我们快速完成这个流程。
           </DialogTitle>
           <Separator />
-          <Carousel setApi={setApi}>
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            setApi={setApi}
+          >
             <CarouselContent>
               <CarouselItem className="basis-5/6 sm:basis-full">
                 <DialogDescription className="mt-4">

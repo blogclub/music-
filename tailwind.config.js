@@ -12,9 +12,9 @@ module.exports = {
     container: {
       center: true,
       padding: "2rem",
+      "2xl": "1400px",
     },
     screens: {
-      "2xl": "1400px",
       sm: { min: "1360px", max: "4096px" },
       md: { min: "768px", max: "1360px" },
     },

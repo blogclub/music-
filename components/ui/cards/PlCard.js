@@ -30,7 +30,7 @@ export default function PlCard({
       className="relative cursor-pointer w-full h-full"
       onClick={() => router.push(`/playlist?id=${id}`)}
     >
-      <AspectRatio ratio={1 / 1} className="relative">
+      <AspectRatio ratio={1} className="relative">
         <LazyLoadImage
           effect="blur"
           src={`${picUrl}?param=512y512`}

@@ -15,7 +15,12 @@ import MvCard from "../ui/cards/MvCard";
 
 export default function Display({ source, type }) {
   return (
-    <Carousel className="mt-4">
+    <Carousel
+      opts={{
+        align: "start",
+      }}
+      className="mt-4 w-full"
+    >
       <CarouselContent>
         {source &&
           source.map((source, index) => (
@@ -100,7 +105,8 @@ export default function Display({ source, type }) {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(() => (
               <CarouselItem
                 className={cn(
-                  type === "playlist" && "basis-[85%] md:basis-3/5 sm:basis-1/3",
+                  type === "playlist" &&
+                    "basis-[85%] md:basis-3/5 sm:basis-1/3",
                   type === "songs" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
                   type === "album" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
                   type === "artist" && "basis-3/5 md:basis-2/5 sm:basis-1/5",

@@ -916,7 +916,7 @@ const Player = () => {
                                 "text-balance transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
                                 isHighlightedRow &&
                                   highlightedIndex !== -1 &&
-                                  "font-medium text-[1.75rem] md:text-[32px] sm:text-[34px] blur-0",
+                                  "font-medium text-[1.75rem] md:text-[32px] sm:text-[32px] blur-0",
                                 !isHighlightedRow &&
                                   "opacity-50 text-[28px] sm:text-[30px] font-medium"
                               )}
@@ -937,7 +937,7 @@ const Player = () => {
                           );
                         })}
                       </div>
-                    </div>{" "}
+                    </div>
                   </ScrollArea>
                 </div>
               </div>
