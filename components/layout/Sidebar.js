@@ -11,6 +11,7 @@ import { Badge } from "../ui/badge";
 import { useTheme } from "next-themes";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import Login from "./Login";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -119,14 +120,7 @@ export default function Sidebar() {
             仪表盘
           </Button>
         ) : (
-          <Button
-            variant={router.asPath === "/login" ? "secondary" : "ghost"}
-            onClick={() => router.push("/login")}
-            className="px-8 py-2"
-          >
-            <DashboardIcon className="mr-2 size-4" />
-           登录
-          </Button>
+          <Login type="sidebar" />
         )}
 
         <Button

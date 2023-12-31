@@ -17,6 +17,7 @@ import { SongIdsContext } from "./SongIdsContext";
 import { useTheme } from "next-themes";
 import { Badge } from "../ui/badge";
 import { Input } from "../ui/input";
+import Login from "./Login";
 
 export default function Bar() {
   const {
@@ -101,7 +102,7 @@ export default function Bar() {
       <MenubarMenu>
         <MenubarTrigger>账户</MenubarTrigger>
         <MenubarContent>
-          <MenubarItem onClick={() => router.push("/login")}>登录</MenubarItem>
+          <Login type="bar" />
           <MenubarItem onClick={() => router.push("/dashboard")}>
             仪表盘
           </MenubarItem>

@@ -12,6 +12,7 @@ import { SongIdsProvider } from "@/components/layout/SongIdsContext";
 import Player from "@/components/layout/Player";
 import Bar from "@/components/layout/Bar";
 import Sidebar from "@/components/layout/Sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function MyApp({ Component, pageProps }) {
   const [showChild, setShowChild] = useState(false);
@@ -35,6 +36,9 @@ export default function MyApp({ Component, pageProps }) {
           </div>
           <div className="fixed py-2 px-6 md:px-96 sm:px-96 bottom-0 z-[99999]">
             <Player />
+          </div>
+          <div className="px-96 fixed right-0 max-w-40 w-full z-[9999999]">
+            <Toaster className="max-w-40 w-full" />
           </div>
         </AnimatePresence>
         <Analytics />
