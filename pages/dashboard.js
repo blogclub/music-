@@ -11,6 +11,8 @@ import { Separator } from "@/components/ui/separator";
 import Spinner from "@/components/ui/spinner";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import CreatePlaylist from "@/components/layout/CreatePlaylist";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Dashboard() {
   const [userDetail, setUserDetail] = useState(null);
@@ -32,7 +34,7 @@ export default function Dashboard() {
         console.log(response.data);
 
         const playlistResponse = await axios.get(
-          `${site.api}/user/playlist?uid=${userData.data.account.id}`
+          `${site.api}/user/playlist?uid=${userData.data.account.id}&cookie=${cookie}`
         );
         const playlistData = playlistResponse.data;
         setPlaylists(playlistData.playlist);
@@ -78,6 +80,12 @@ export default function Dashboard() {
     localStorage.removeItem("userData");
     router.reload();
   };
+  const filteredPlaylists = playlists.filter(
+    (playlist) => playlist.subscribed === true
+  );
+  const createdPlaylists = playlists.filter(
+    (playlist) => playlist.creator.userId === userData.data.account.id
+  );
   return (
     <Container title="仪表盘">
       {userDetail === null && <Spinner />}
@@ -100,7 +108,9 @@ export default function Dashboard() {
             <div className="mt-8 px-16 py-8 flex flex-row justify-between">
               <h1 className="items-center">
                 {userDetail.profile.nickname}
-                <Badge className="ml-2 -mt-4 rounded-full">Lv.{userDetail.level}</Badge>
+                <Badge className="ml-2 -mt-4 rounded-full">
+                  Lv.{userDetail.level}
+                </Badge>
               </h1>
               <div className="items-center">
                 <svg
@@ -120,10 +130,42 @@ export default function Dashboard() {
           </Card>
           <br />
           <>
-            <h2>收藏的歌单</h2>
+            <h2>你的歌单</h2>
             <h6 className="mb-2">你喜欢的音乐.</h6>
             <Separator />
-            <Display type="playlist" source={playlists} />
+
+            <Tabs defaultValue="all" className="w-full">
+              <div className="flex flex-row justify-between mt-4">
+                <TabsList>
+                  <TabsTrigger value="all">
+                    全部歌单
+                    <sup className="font-extrabold">{playlists.length}</sup>
+                  </TabsTrigger>
+                  <TabsTrigger value="create">
+                    创建的歌单
+                    <sup className="font-extrabold">
+                      {createdPlaylists.length}
+                    </sup>
+                  </TabsTrigger>
+                  <TabsTrigger value="favorite">
+                    收藏的歌单
+                    <sup className="font-extrabold">
+                      {filteredPlaylists.length}
+                    </sup>
+                  </TabsTrigger>
+                </TabsList>
+                <CreatePlaylist />
+              </div>
+              <TabsContent value="all">
+                <Display type="playlist" source={playlists} />
+              </TabsContent>
+              <TabsContent value="create">
+                <Display type="playlist" source={createdPlaylists} />
+              </TabsContent>
+              <TabsContent value="favorite">
+                <Display type="playlist" source={filteredPlaylists} />
+              </TabsContent>
+            </Tabs>
           </>
           <br />
           <>

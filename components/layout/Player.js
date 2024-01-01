@@ -887,7 +887,7 @@ const Player = () => {
                     </div>
                   ))}
                 </div>
-                <div className="hidden md:block sm:block w-1/2 h-screen overflow-y-auto">
+                <div className="hidden md:block sm:block w-1/2 h-screen overflow-y-auto px-16">
                   <ScrollArea className="h-screen relative">
                     <div className="fixed w-full top-0 bg-gradient-to-b from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-24 z-[9999999999999]" />
                     <div className="fixed w-full bottom-0 bg-gradient-to-t from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-24 z-[9999999999999]" />
@@ -913,12 +913,12 @@ const Player = () => {
                               key={index}
                               className={cn(
                                 line.text !== "" &&
-                                "text-balance transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
+                                "text-balance transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 w-auto rounded-xl px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
                                 isHighlightedRow &&
                                   highlightedIndex !== -1 &&
                                   "font-medium text-[1.75rem] md:text-[32px] sm:text-[32px] blur-0",
                                 !isHighlightedRow &&
-                                  "opacity-50 text-[28px] sm:text-[30px] font-medium"
+                                  "text-neutral-600 dark:text-neutral-400 text-[28px] sm:text-[30px] font-medium blur-[1px]"
                               )}
                               onClick={() =>
                                 audioRef.current.seekTo(line.timestamp)
@@ -929,7 +929,7 @@ const Player = () => {
                                 {line.text ? <>{line.text}</> : <></>}
                               </span>
                               {translationLine?.text && (
-                                <span className="text-2xl md:text-2xl sm:text-3xl text-neutral-700 dark:text-neutral-300 font-medium leading-tight">
+                                <span className="text-2xl md:text-2xl sm:text-3xl text-neutral-700 dark:text-neutral-300 leading-tight">
                                   {translationLine.text}
                                 </span>
                               )}
@@ -948,7 +948,5 @@ const Player = () => {
     </div>
   );
 };
-
-Player.theme = "dark";
 
 export default Player;

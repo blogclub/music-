@@ -18,6 +18,7 @@ import { useTheme } from "next-themes";
 import { Badge } from "../ui/badge";
 import { Input } from "../ui/input";
 import Login from "./Login";
+import RightClick from "./RightClick";
 
 export default function Bar() {
   const {
@@ -128,53 +129,64 @@ export default function Bar() {
                 const isHovered = song.id === hoveredItemId;
 
                 return (
-                  <MenubarItem
-                    key={song.id}
-                    onMouseEnter={() => handleMouseEnter(song.id)}
-                    onMouseLeave={handleMouseLeave}
-                    className="flex flex-row justify-between transition-all "
+                  <RightClick
+                    name={song.name}
+                    picUrl={song.al.picUrl}
+                    id={song.id}
+                    ar={
+                      song.ar
+                        ? song.ar.map((artist) => artist.name).join(" / ")
+                        : song.artists.map((artist) => artist.name).join(" / ")
+                    }
                   >
-                    <span className="w-full">{song.name}</span>
-                    <div className="w-24 flex flex-row justify-end transition-all duration-500 space-x-1">
-                      {(isHovered || window.innerWidth < 1360) && (
-                        <>
-                          <Button
-                            onClick={() => handleAddToPlaylist(song.id)}
-                            className="p-0 size-6 transition-all"
-                            variant="ghost"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              className="size-4"
+                    <MenubarItem
+                      key={song.id}
+                      onMouseEnter={() => handleMouseEnter(song.id)}
+                      onMouseLeave={handleMouseLeave}
+                      className="flex flex-row justify-between transition-all py-2"
+                    >
+                      <span className="w-full">{song.name}</span>
+                      <div className="w-24 flex flex-row justify-end transition-all duration-500 space-x-1">
+                        {(isHovered || window.innerWidth < 1360) && (
+                          <>
+                            <Button
+                              onClick={() => handleAddToPlaylist(song.id)}
+                              className="p-0 size-6 transition-all"
+                              variant="ghost"
                             >
-                              <path
-                                fillRule="evenodd"
-                                d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </Button>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                className="size-4"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </Button>
 
-                          <Button
-                            onClick={() => handleRemoveFromPlaylist(song.id)}
-                            className="p-0 size-6 mr-2 transition-all"
-                            variant="ghost"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 16 16"
-                              fill="currentColor"
-                              className="w-4 h-4"
+                            <Button
+                              onClick={() => handleRemoveFromPlaylist(song.id)}
+                              className="p-0 size-6 mr-2 transition-all"
+                              variant="ghost"
                             >
-                              <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
-                            </svg>
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </MenubarItem>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16 16"
+                                fill="currentColor"
+                                className="w-4 h-4"
+                              >
+                                <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                              </svg>
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                    </MenubarItem>
+                  </RightClick>
                 );
               })}
           </ScrollArea>

@@ -16,6 +16,9 @@ export default function PlCard({
   const [isHover, setIsHover] = useState(false);
 
   function formatPlayCount(playCount) {
+    if (playCount >= 10000){
+      return (playCount / 10000).toFixed(1) + "万";
+    }
     if (playCount >= 1000) {
       return (playCount / 1000).toFixed(1) + "千";
     } else {

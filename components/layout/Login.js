@@ -113,7 +113,6 @@ export default function Login({ type }) {
 
       if (res.data.code === 200) {
         toast({
-          variant: "destructive",
           title: "验证码发送成功",
           description: "( •̀ ω •́ )y",
         });
