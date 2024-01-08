@@ -7,6 +7,7 @@ import site from "@/lib/site.config";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Spinner from "@/components/ui/spinner";
 
 export default function Home() {
   const router = useRouter();
@@ -25,26 +26,33 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseTags = await fetch(
-          `${site.api}/playlist/highquality/tags`
-        );
+        const [
+          responseTags,
+          responseHighQualityPlaylists,
+          responseNewSongs,
+          responseNewAl,
+          responseNewMV,
+          responseNewAr,
+        ] = await Promise.all([
+          fetch(`${site.api}/playlist/highquality/tags`),
+          fetch(`${site.api}/personalized`),
+          fetch(`${site.api}/personalized/newsong`),
+          fetch(`${site.api}/album/newest`),
+          fetch(`${site.api}/personalized/mv`),
+          fetch(`${site.api}/top/artists`),
+        ]);
+
         const dataTags = await responseTags.json();
         if (dataTags && dataTags.code === 200) {
           setTags(dataTags.tags);
         }
 
-        const responseHighQualityPlaylists = await fetch(
-          `${site.api}/personalized`
-        );
         const dataHighQualityPlaylists =
           await responseHighQualityPlaylists.json();
         if (dataHighQualityPlaylists && dataHighQualityPlaylists.code === 200) {
           setPlaylists(dataHighQualityPlaylists.result);
         }
 
-        const responseNewSongs = await fetch(
-          `${site.api}/personalized/newsong`
-        );
         const dataNewSongs = await responseNewSongs.json();
         if (dataNewSongs && dataNewSongs.code === 200) {
           setNewSongs(dataNewSongs.result);
@@ -59,18 +67,16 @@ export default function Home() {
             setSongDetails(dataSongDetails.songs);
           }
         }
-        const responseNewAl = await fetch(`${site.api}/album/newest`);
+
         const dataNewAl = await responseNewAl.json();
         const alData = dataNewAl.albums;
         setNewAl(alData);
 
-        const responseNewMV = await fetch(`${site.api}/personalized/mv`);
         const dataNewMV = await responseNewMV.json();
         if (dataNewMV && dataNewMV.code === 200) {
           setNewMv(dataNewMV.result);
         }
 
-        const responseNewAr = await fetch(`${site.api}/top/artists`);
         const dataNewAr = await responseNewAr.json();
         if (dataNewAr && dataNewAr.code === 200) {
           setNewAr(dataNewAr.artists);
@@ -111,43 +117,50 @@ export default function Home() {
 
   return (
     <Container title="探索">
-      <h1>探索</h1>
-      <h6 className="mb-2">永远保持最新</h6>
-      <Separator />
-      <h2 className="mt-4">歌单</h2>
-      <h6 className="mb-2">人们的最爱</h6>
-      <Separator />
-      <Display source={playlists} type="playlist" />
-      <h2 className="mt-4">歌曲</h2>
-      <h6 className="mb-2">新歌速递</h6>
-      <Separator />
-      <Display source={songDetails} type="songs" />
-      <h2 className="mt-4">专辑</h2>
-      <h6 className="mb-2">新碟上架</h6>
-      <Separator />
-      <Display source={newAl} type="album" />
-      <h2 className="mt-4">艺术家</h2>
-      <h6 className="mb-2">最受欢迎</h6>
-      <Separator />
-      <Display source={newAr} type="artist" />
-      <h2 className="mt-4">按类别浏览</h2>
-      <h6 className="mb-2">探索不同风格</h6>
-      <Separator />
-
-      <Card className="mt-4 text-justify rounded-xl px-2 py-2">
-        {tags.map((tag) => (
-          <Button
-            variant={selectedTag === tag.name ? "secondary" : "ghost"}
-            key={tag.id}
-            onClick={() => handleTagClick(tag.name)}
-          >
-            {tag.name}
-          </Button>
-        ))}
-      </Card>
-      {selectedTag !== "" && <Display source={tagedPlaylist} type="playlist" />}
-      <br />
-      <br />
+      {!playlists.length && <Spinner />}
+      {playlists.length && (
+        <>
+          {" "}
+          <h1>探索</h1>
+          <h6 className="mb-2">永远保持最新</h6>
+          <Separator />
+          <h2 className="mt-4">歌单</h2>
+          <h6 className="mb-2">人们的最爱</h6>
+          <Separator />
+          <Display source={playlists} type="playlist" />
+          <h2 className="mt-4">歌曲</h2>
+          <h6 className="mb-2">新歌速递</h6>
+          <Separator />
+          <Display source={songDetails} type="songs" />
+          <h2 className="mt-4">专辑</h2>
+          <h6 className="mb-2">新碟上架</h6>
+          <Separator />
+          <Display source={newAl} type="album" />
+          <h2 className="mt-4">艺术家</h2>
+          <h6 className="mb-2">最受欢迎</h6>
+          <Separator />
+          <Display source={newAr} type="artist" />
+          <h2 className="mt-4">按类别浏览</h2>
+          <h6 className="mb-2">探索不同风格</h6>
+          <Separator />
+          <Card className="mt-4 text-justify rounded-xl px-2 py-2">
+            {tags.map((tag) => (
+              <Button
+                variant={selectedTag === tag.name ? "secondary" : "ghost"}
+                key={tag.id}
+                onClick={() => handleTagClick(tag.name)}
+              >
+                {tag.name}
+              </Button>
+            ))}
+          </Card>
+          {selectedTag !== "" && (
+            <Display source={tagedPlaylist} type="playlist" />
+          )}
+          <br />
+          <br />
+        </>
+      )}
     </Container>
   );
 }

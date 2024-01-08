@@ -555,8 +555,8 @@ const Player = () => {
           </Card>
         </DrawerTrigger>
         <div>
-          <DrawerContent className="z-[99999999] bg-white dark:bg-zinc-950 text-black dark:text-white flex flex-col rounded-t-xl h-screen mt-24 fixed bottom-0 left-0 right-0 border-neutral-800 focus:outline-none">
-            <div className="p-0 md:p-2 sm:p-4 bg-white dark:bg-zinc-950 flex-1">
+          <DrawerContent className="z-[99999999] flex flex-col rounded-t-xl h-screen mt-24 fixed bottom-0 left-0 right-0 border-neutral-800 focus:outline-none">
+            <div className="p-0 md:p-2 sm:p-4 flex-1">
               <DrawerClose asChild>
                 <Button
                   variant="ghost"
@@ -614,7 +614,9 @@ const Player = () => {
                             </DrawerTrigger>
                             <DrawerContent className="z-[99999999999999]">
                               <div className="block md:hidden sm:hidden w-full h-[80vh] overflow-y-auto">
-                                <div className="py-4 overflow-y-auto select-none mt-8">
+                                <div className="fixed w-full top-0 bg-gradient-to-b from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-16 z-[9999999999999] pointer-events-none" />
+                                <div className="fixed w-full bottom-0 bg-gradient-to-t from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-16 z-[9999999999999]  pointer-events-none" />
+                                <div className="py-4 overflow-y-auto select-none my-24">
                                   <div
                                     ref={lyricsContainerRef}
                                     style={{ maxHeight: "100%" }}
@@ -628,9 +630,8 @@ const Player = () => {
                                         );
                                       const highlightedIndex = lyrics.findIndex(
                                         (lyric) =>
-                                          lyric.text === highlightedLine &&
                                           lyric.timestamp ===
-                                            highlightedLineTimestamp
+                                          highlightedLineTimestamp
                                       );
                                       const isHighlightedRow =
                                         index === highlightedIndex;
@@ -638,12 +639,13 @@ const Player = () => {
                                         <p
                                           key={index}
                                           className={cn(
-                                            "text-balance transition-all hover:bg-neutral-300/75 dark:hover:bg-neutral-700/25 w-auto rounded-lg px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
+                                            line.text !== "" &&
+                                              "text-balance transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 w-auto rounded-xl px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
                                             isHighlightedRow &&
                                               highlightedIndex !== -1 &&
-                                              "font-medium text-[28px] blur-0",
+                                              "font-medium text-[1.75rem] md:text-[32px] sm:text-[32px] blur-0",
                                             !isHighlightedRow &&
-                                              "opacity-50 text-[26px] font-medium"
+                                              "text-neutral-500 dark:text-neutral-400 text-[28px] sm:text-[30px] font-medium"
                                           )}
                                           onClick={() =>
                                             audioRef.current.seekTo(
@@ -660,7 +662,7 @@ const Player = () => {
                                             )}
                                           </span>
                                           {translationLine?.text && (
-                                            <span className="text-[26px] text-neutral-700 dark:text-neutral-300 font-medium leading-tight">
+                                            <span className="text-2xl md:text-2xl sm:text-3xl leading-tight">
                                               {translationLine.text}
                                             </span>
                                           )}
@@ -889,8 +891,8 @@ const Player = () => {
                 </div>
                 <div className="hidden md:block sm:block w-1/2 h-screen overflow-y-auto px-16">
                   <ScrollArea className="h-screen relative">
-                    <div className="fixed w-full top-0 bg-gradient-to-b from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-24 z-[9999999999999]" />
-                    <div className="fixed w-full bottom-0 bg-gradient-to-t from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-24 z-[9999999999999]" />
+                    <div className="fixed w-full top-0 bg-gradient-to-b from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-24 z-[9999999999999] pointer-events-none" />
+                    <div className="fixed w-full bottom-0 bg-gradient-to-t from-white to-white/0 dark:from-zinc-950 dark:to-zinc-950/0 py-24 z-[9999999999999]  pointer-events-none" />
                     <div className="py-4 overflow-y-auto select-none my-56">
                       <div
                         ref={lyricsContainerRef}
@@ -904,7 +906,6 @@ const Player = () => {
                           );
                           const highlightedIndex = lyrics.findIndex(
                             (lyric) =>
-                              lyric.text === highlightedLine &&
                               lyric.timestamp === highlightedLineTimestamp
                           );
                           const isHighlightedRow = index === highlightedIndex;
@@ -913,12 +914,12 @@ const Player = () => {
                               key={index}
                               className={cn(
                                 line.text !== "" &&
-                                "text-balance transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 w-auto rounded-xl px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
+                                  "text-balance transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 w-auto rounded-xl px-8 flex flex-col space-y-0 cursor-pointer py-6 leading-tight",
                                 isHighlightedRow &&
                                   highlightedIndex !== -1 &&
                                   "font-medium text-[1.75rem] md:text-[32px] sm:text-[32px] blur-0",
                                 !isHighlightedRow &&
-                                  "text-neutral-600 dark:text-neutral-400 text-[28px] sm:text-[30px] font-medium blur-[1px]"
+                                  "text-neutral-500 dark:text-neutral-400 text-[28px] sm:text-[30px] font-medium"
                               )}
                               onClick={() =>
                                 audioRef.current.seekTo(line.timestamp)
@@ -929,7 +930,7 @@ const Player = () => {
                                 {line.text ? <>{line.text}</> : <></>}
                               </span>
                               {translationLine?.text && (
-                                <span className="text-2xl md:text-2xl sm:text-3xl text-neutral-700 dark:text-neutral-300 leading-tight">
+                                <span className="text-2xl md:text-2xl sm:text-3xl leading-tight">
                                   {translationLine.text}
                                 </span>
                               )}

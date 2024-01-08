@@ -27,39 +27,24 @@ export default function Album() {
   const [searchTerm, setSearchTerm] = useState(""); // 搜索关键词状态
   const [isFavorited, setIsFavorited] = useState(false);
 
-  const checkIsFavorited = async () => {
-    try {
-      const response = await axios.get(`${site.api}/album/detail/dynamic`, {
-        params: {
-          id: id,
-          cookie: cookie,
-        },
-      });
-
-      setIsFavorited(response.data.subscribed);
-    } catch (error) {
-      // 处理错误
-      console.error(error);
-    }
-  };
-
-  const getAlbumDetail = async () => {
-    try {
-      const response = await fetch(`${site.api}/album?id=${id}`);
-      const data = await response.json();
-      const songs = data.songs;
-      setAlbumDetail(data);
-      setAlbumTrack([songs]);
-    } catch (error) {
-      // 处理错误
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     if (id !== null) {
-      checkIsFavorited();
-      getAlbumDetail();
+      Promise.all([
+        axios.get(`${site.api}/album/detail/dynamic`, {
+          params: {
+            id: id,
+            cookie: cookie,
+          },
+        }),
+        fetch(`${site.api}/album?id=${id}`).then(response => response.json())
+      ]).then(([response, data]) => {
+        setIsFavorited(response.data.subscribed);
+        setAlbumDetail(data);
+        setAlbumTrack([data.songs]);
+      }).catch(error => {
+        console.error(error);
+        // 处理错误
+      });
     }
   }, [id]);
 
@@ -112,14 +97,14 @@ export default function Album() {
                   <CardDescription>
                     <div className="mt-2">
                       <Badge variant="secondary" className="rounded-full mr-2">
-                        Album
+                        专辑
                       </Badge>
-                      album by
+                      By {` `}
                       {albumDetail !== null &&
                         albumDetail.album.artists
                           .map((artist) => artist.name)
                           .join(" / ")}
-                      , {albumDetail.songs.length}songs
+                      , {albumDetail.songs.length}首歌
                     </div>
                   </CardDescription>
                 </CardHeader>
@@ -128,7 +113,7 @@ export default function Album() {
                     {albumDetail !== null && albumDetail.album.description}
                     {albumDetail !== null &&
                       albumDetail.album.description === null &&
-                      "No description could be displayed"}
+                      "没有简介"}
                   </p>
                 </CardContent>
                 <CardFooter>
@@ -146,7 +131,7 @@ export default function Album() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      Play
+                     播放全部
                     </Button>
                     <Button
                       variant="ghost"
@@ -183,7 +168,7 @@ export default function Album() {
                           />
                         </svg>
                       )}
-                      {isFavorited ? "Cancel Starred" : "Star"}
+                      {isFavorited ? "取消收藏" : "收藏"}
                     </Button>
                   </div>
                 </CardFooter>

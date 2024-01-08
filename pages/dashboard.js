@@ -22,30 +22,26 @@ export default function Dashboard() {
   const userDataStr = localStorage.getItem("userData");
   const userData = JSON.parse(userDataStr);
   const cookie = localStorage.getItem("cookie");
-
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          `${site.api}/user/detail?uid=${userData.data.account.id}&t=${Date.now}`
-        );
+        const [response, playlistResponse, artist, mv] = await Promise.all([
+          axios.get(`${site.api}/user/detail?uid=${userData.data.account.id}&t=${Date.now}`),
+          axios.get(`${site.api}/user/playlist?uid=${userData.data.account.id}&cookie=${cookie}`),
+          axios.get(`${site.api}/artist/sublist?cookie=${cookie}`),
+          axios.get(`${site.api}/mv/sublist?cookie=${cookie}`)
+        ]);
+  
         const userDetails = response.data;
         setUserDetail(userDetails);
         console.log(response.data);
-
-        const playlistResponse = await axios.get(
-          `${site.api}/user/playlist?uid=${userData.data.account.id}&cookie=${cookie}`
-        );
+  
         const playlistData = playlistResponse.data;
         setPlaylists(playlistData.playlist);
-
-        const artist = await axios.get(
-          `${site.api}/artist/sublist?cookie=${cookie}`
-        );
+  
         const artistData = artist.data;
         setArtist(artistData.data);
-
-        const mv = await axios.get(`${site.api}/mv/sublist?cookie=${cookie}`);
+  
         const mvData = mv.data;
         setMv(mvData.data);
       } catch (error) {
@@ -53,7 +49,7 @@ export default function Dashboard() {
         // 处理错误
       }
     }
-
+  
     fetchData(); // 调用 fetchData 函数来获取用户详情和歌单数据
   }, []); // 空数组作为依赖项，确保只在组件挂载后调用一次
 
@@ -135,7 +131,7 @@ export default function Dashboard() {
             <Separator />
 
             <Tabs defaultValue="all" className="w-full">
-              <div className="flex flex-row justify-between mt-4">
+              <div className="flex flex-col space-y-1.5 md:space-y-0 sm:space-y-0 md:flex-row sm:flex-row justify-between mt-4">
                 <TabsList>
                   <TabsTrigger value="all">
                     全部歌单

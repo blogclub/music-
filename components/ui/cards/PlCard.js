@@ -3,20 +3,24 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "../button";
+import cn from "classnames";
+import { Card } from "../card";
+import { Separator } from "../separator";
 
 export default function PlCard({
   picUrl,
   id,
   name,
   index,
-  signature,
+  creator,
+  avatarUrl,
   playCount,
 }) {
   const router = useRouter();
   const [isHover, setIsHover] = useState(false);
 
   function formatPlayCount(playCount) {
-    if (playCount >= 10000){
+    if (playCount >= 10000) {
       return (playCount / 10000).toFixed(1) + "万";
     }
     if (playCount >= 1000) {
@@ -25,19 +29,20 @@ export default function PlCard({
       return playCount.toString();
     }
   }
+
   return (
-    <div
+    <Card
       key={index}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      className="relative cursor-pointer w-full h-full"
+      className="relative cursor-pointer py-0 size-full"
       onClick={() => router.push(`/playlist?id=${id}`)}
     >
       <AspectRatio ratio={1} className="relative">
         <LazyLoadImage
           effect="blur"
-          src={`${picUrl}?param=512y512`}
-          className="hover:brightness-75 object-cover hover:scale-[1.01] min-w-64 md:min-w-72 sm:min-w-96 w-full h-auto transition-all  bg-neutral-200 dark:bg-neutral-800 rounded-xl"
+          src={`${picUrl}?param=384y384`}
+          className="size-full transition-all  bg-neutral-200 dark:bg-neutral-800 rounded-t-xl"
         />
         {isHover && (
           <Button
@@ -60,16 +65,45 @@ export default function PlCard({
           </Button>
         )}
       </AspectRatio>
-
-      <div className="text-sm mt-4">
-        <div className="flex flex-row text-xs text-neutral-600 dark:text-neutral-400">
-          <div className="font-normal">{formatPlayCount(playCount)}次播放</div>
+      <div
+        className={cn(
+          "transition-all relative rounded-b-xl overflow-hidden bg-white/75 dark:bg-zinc-950/75 z-[9999] backdrop-blur-3xl"
+        )}
+      >
+        <img
+          src={`${picUrl}?param=384y384`}
+          className="absolute top-0 bottom-0 left-0 right-0 z-[-1] rounded-b-xl blur-lg"
+        />
+        <div
+          className={cn(
+            "bg-white/75 dark:bg-zinc-950/75 z-[9999] backdrop-blur-3xl px-1.5 py-2"
+          )}
+        >
+          <div className="mt-1 px-1 text-xs flex flex-row items-center space-x-0.5 text-neutral-600 dark:text-neutral-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="size-3"
+            >
+              <path d="M3 3.732a1.5 1.5 0 0 1 2.305-1.265l6.706 4.267a1.5 1.5 0 0 1 0 2.531l-6.706 4.268A1.5 1.5 0 0 1 3 12.267V3.732Z" />
+            </svg>
+            <div className="font-normal">{formatPlayCount(playCount)}</div>
+          </div>
+          <h5 className="font-medium px-1 mb-1.5">
+            <span className="text-sm line-clamp-1 text-balance">{name}</span>
+          </h5>
+          {creator && (
+            <div className="mt-1.5 text-zinc-600 dark:text-zinc-400 line-clamp-1 rounded-full px-1 py-1 bg-zinc-200/40 dark:bg-zinc-800/40 flex flex-row space-x-2 items-center text-sm">
+              <LazyLoadImage
+                src={`${picUrl}?param=32y32`}
+                className="rounded-full size-6 mr-2"
+              />
+              {creator}
+            </div>
+          )}
         </div>
-        <h5 className="font-medium px-1">
-          <span className="hover:underline">{name}</span>
-        </h5>
       </div>
-      <br />
-    </div>
+    </Card>
   );
 }

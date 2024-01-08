@@ -21,91 +21,49 @@ export default function Artist() {
   const { id } = router.query;
 
   const cookie = localStorage.getItem("cookie");
-
   useEffect(() => {
     if (id) {
-      const getArDetail = async () => {
-        try {
-          setIsLoading(true);
-          const arDataResponse = await axios.get(
-            `${site.api}/artist/detail?id=${id}`
-          );
-          if (arDataResponse.data.code === 200) {
+      const promises = [
+        axios.get(`${site.api}/artist/detail?id=${id}`),
+        axios.get(`${site.api}/artist/top/song?id=${id}`),
+        axios.get(`${site.api}/artist/mv?id=${id}&limit=100`),
+        axios.get(`${site.api}/artist/album?id=${id}`),
+        axios.get(`${site.api}/simi/artist?id=${id}&cookie=${cookie}`)
+      ];
+      
+      setIsLoading(true);
+      
+      Promise.all(promises.map(p => p.catch(error => ({error}))))
+        .then(([arDataResponse, arSongsResponse, arMVsResponse, arAlbumsResponse, similarArtistsResponse]) => {
+          if (arDataResponse && arDataResponse.data.code === 200) {
             setArData(arDataResponse.data.data.artist);
           }
-        } catch (error) {
-          console.error("An error occurred while fetching Ar data:", error);
-        }
-      };
-
-      const getArSongs = async () => {
-        try {
-          const arSongsResponse = await axios.get(
-            `${site.api}/artist/top/song?id=${id}`
-          );
-          if (arSongsResponse.data.code === 200) {
+          if (arSongsResponse && arSongsResponse.data.code === 200) {
             setArSongs(arSongsResponse.data.songs);
           }
-        } catch (error) {
-          console.error("An error occurred while fetching ArSongs:", error);
-        }
-      };
-
-      const getArMVs = async () => {
-        try {
-          const arMVsResponse = await axios.get(
-            `${site.api}/artist/mv?id=${id}&limit=100`
-          );
-          if (arMVsResponse.data.code === 200) {
+          if (arMVsResponse && arMVsResponse.data.code === 200) {
             setArMVs(arMVsResponse.data.mvs);
           }
-        } catch (error) {
-          console.error("An error occurred while fetching ArMVs:", error);
-        }
-      };
-
-      const getArAlbums = async () => {
-        try {
-          const arAlbumsResponse = await axios.get(
-            `${site.api}/artist/album?id=${id}`
-          );
-          if (arAlbumsResponse.data.code === 200) {
+          if (arAlbumsResponse && arAlbumsResponse.data.code === 200) {
             setArAlbums(arAlbumsResponse.data.hotAlbums);
           }
-        } catch (error) {
-          console.error("An error occurred while fetching ArAlbums:", error);
-        }
-      };
-
-      const getSimilarArtists = async () => {
-        try {
-          const similarArtistsResponse = await axios.get(
-            `${site.api}/simi/artist?id=${id}&cookie=${cookie}`
-          );
-          if (similarArtistsResponse.data.code === 200) {
+          if (similarArtistsResponse && similarArtistsResponse.data.code === 200) {
             setSimilarArtists(similarArtistsResponse.data.artists);
           }
-        } catch (error) {
-          console.error(
-            "An error occurred while fetching SimilarArtists:",
-            error
-          );
-        } finally {
+        })
+        .catch(error => {
+          console.error("An error occurred while fetching artist data:", error);
+        })
+        .finally(() => {
           setIsLoading(false);
-        }
-      };
-
-      getArDetail();
-      getArSongs();
-      getArMVs();
-      getArAlbums();
-      getSimilarArtists();
+        });
     }
-
+  
     return () => {
       setArData(null);
     };
-  }, [id]);
+  }, [id, cookie]);
+  
   return (
     <Container title={arData && arData.name}>
       {!arData && <Spinner />}

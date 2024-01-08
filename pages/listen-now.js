@@ -6,6 +6,7 @@ import site from "@/lib/site.config";
 import Container from "@/components/layout/Container";
 import Display from "@/components/layout/Carousel";
 import { Separator } from "@/components/ui/separator";
+import Spinner from "@/components/ui/spinner";
 
 export default function ListenNow() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function ListenNow() {
       );
       const data = response.data;
       const plData = data.recommend;
-      setPlaylist(plData);
+      return plData; // 返回Promise对象
     } catch (error) {
       console.error(error);
     }
@@ -39,15 +40,24 @@ export default function ListenNow() {
       );
       const data = response.data.data;
       const songData = data.dailySongs;
-      setSongs(songData);
+      return songData; // 返回Promise对象
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchNewPl();
-    fetchNewSongs();
+    Promise.all([fetchNewPl(), fetchNewSongs()])
+      .then(([plData, songData]) => {
+        setPlaylist(plData);
+        setSongs(songData);
+      })
+      .catch((error) => {
+        console.log(
+          "An error occurred while fetching new playlist and songs:",
+          error
+        );
+      });
   }, []);
 
   const fetchSongs = async () => {
@@ -151,26 +161,27 @@ export default function ListenNow() {
     <Container title="现在就听">
       {userData && (
         <>
-          <h1>现在就听</h1>
-          <h6 className="mb-2">每日推荐好音乐，您的专属.</h6>
-          <Separator />
-          <h2 className="mt-4">歌单</h2>
-          <h6 className="mb-2">你的最爱，每日更新.</h6>
-          <Separator />
-          <Display source={playlist} type="playlist" />
-          <h2 className="mt-4">歌曲</h2>
-          <h6 className="mb-2">你的最爱，每日更新.</h6>
-          <Separator />
-
-          <Display source={songs} type="songs" />
+          {!playlist.length && <Spinner />}
+          {playlist.length && (
+            <>
+              <h1>现在就听</h1>
+              <h6 className="mb-2">每日推荐好音乐，您的专属.</h6>
+              <Separator />
+              <h2 className="mt-4">歌单</h2>
+              <h6 className="mb-2">你的最爱，每日更新.</h6>
+              <Separator />
+              <Display source={playlist} type="playlist" />
+              <h2 className="mt-4">歌曲</h2>
+              <h6 className="mb-2">你的最爱，每日更新.</h6>
+              <Separator />
+              <Display source={songs} type="songs" /> <br />
+              <br />
+            </>
+          )}
         </>
       )}
-      <br />
-      <br />
 
-      {!userData && (
-        <div className="font-medium text-center">请先登录.</div>
-      )}
+      {!userData && <div className="font-medium text-center">请先登录.</div>}
     </Container>
   );
 }

@@ -27,7 +27,7 @@ export default function Display({ source, type }) {
             <CarouselItem
               className={cn(
                 "",
-                type === "playlist" && "basis-[85%] md:basis-3/5 sm:basis-1/3",
+                type === "playlist" && "basis-3/5 md:basis-2/5 sm:basis-1/4",
                 type === "songs" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
                 type === "album" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
                 type === "artist" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
@@ -41,6 +41,8 @@ export default function Display({ source, type }) {
                   picUrl={source.picUrl ? source.picUrl : source.coverImgUrl}
                   name={source.name}
                   id={source.id}
+                  avatarUrl={source.creator && source.creator.avatarUrl}
+                  creator={source.creator && source.creator.nickname}
                   copywriter={source.copywriter}
                   playCount={
                     source.playcount ? source.playcount : source.playCount
@@ -77,7 +79,7 @@ export default function Display({ source, type }) {
                 <ArCard
                   key={index}
                   index={index}
-                  picUrl={source.picUrl}
+                  picUrl={source.img1v1Url}
                   name={source.name}
                   id={source.id}
                 />
@@ -105,8 +107,7 @@ export default function Display({ source, type }) {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(() => (
               <CarouselItem
                 className={cn(
-                  type === "playlist" &&
-                    "basis-[85%] md:basis-3/5 sm:basis-1/3",
+                  type === "playlist" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
                   type === "songs" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
                   type === "album" && "basis-3/5 md:basis-2/5 sm:basis-1/5",
                   type === "artist" && "basis-3/5 md:basis-2/5 sm:basis-1/5",

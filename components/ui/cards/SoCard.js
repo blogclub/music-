@@ -4,6 +4,7 @@ import { SongIdsContext } from "@/components/layout/SongIdsContext";
 import { useRouter } from "next/router";
 import { Button } from "../button";
 import RightClick from "@/components/layout/RightClick";
+import { Card } from "../card";
 
 export default function SoCard({ picUrl, name, id, index, ar }) {
   const router = useRouter();
@@ -14,18 +15,18 @@ export default function SoCard({ picUrl, name, id, index, ar }) {
   };
   return (
     <RightClick name={name} ar={ar} picUrl={picUrl} id={id}>
-      <div
+      <Card
         onClick={() => handleAddToPlaylist(id)}
         key={index}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         className="cursor-pointer relative"
       >
-        <div className="hover:brightness-75 hover:scale-[1.01] transition-all relative">
+        <div className="transition-all relative">
           <LazyLoadImage
             effect="blur"
-            src={`${picUrl}?param=512y512`}
-            className="w-full bg-neutral-200 dark:bg-neutral-800 rounded-xl"
+            src={`${picUrl}?param=256y256`}
+            className="w-full bg-neutral-200 dark:bg-neutral-800 rounded-t-xl size-full"
           />
           {isHover && (
             <Button
@@ -49,16 +50,24 @@ export default function SoCard({ picUrl, name, id, index, ar }) {
           )}
         </div>
 
-        <div className="text-sm">
-          <h5 className="font-normal px-1 -mb-0.5">
-            <span className="hover:underline font-medium">{name}</span>
-          </h5>
-          <div className="px-1 text-xs text-neutral-600 dark:text-neutral-400">
-            <div className="font-normal hover:underline line-clamp-2">{ar}</div>
+        <div className="-mt-1.5 text-sm transition-all relative rounded-b-xl overflow-hidden bg-white/75 dark:bg-zinc-950/75 z-[9999] backdrop-blur-3xl">
+          <img
+            src={`${picUrl}?param=384y384`}
+            className="absolute top-0 bottom-0 left-0 right-0 z-[-1] rounded-b-xl blur-lg"
+          />
+
+          <div className="bg-white/75 dark:bg-zinc-950/75 z-[9999] backdrop-blur-3xl px-1.5 py-3">
+            <h5 className="px-1">
+              <span className="font-medium line-clamp-1">{name}</span>
+            </h5>
+            <div className="px-1 text-xs text-neutral-600 dark:text-neutral-400">
+              <div className="font-normal hover:underline line-clamp-1">
+                {ar}
+              </div>
+            </div>
           </div>
         </div>
-        <br />
-      </div>
+      </Card>
     </RightClick>
   );
 }

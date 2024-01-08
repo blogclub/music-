@@ -14,11 +14,11 @@ export default function ArCard({ picUrl, name, id, index }) {
       onClick={() => router.push(`/artist?id=${id}`)}
       className="relative cursor-pointer"
     >
-      <div className="hover:brightness-75 hover:scale-[1.01] transition-all relative">
+      <div className="transition-all relative">
         <LazyLoadImage
           effect="blur"
           src={`${picUrl}?param=256y256`}
-          className="bg-neutral-200 dark:bg-neutral-800 rounded-full"
+          className="bg-neutral-200 dark:bg-neutral-800 rounded-full size-full"
         />
         {isHover && (
           <Button

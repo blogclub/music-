@@ -33,61 +33,44 @@ export default function Playlist() {
       )
     : [];
 
-  const checkIsFavorited = async () => {
-    try {
-      const response = await axios.get(`${site.api}/playlist/detail/dynamic`, {
-        params: {
-          id: id,
-          cookie: cookie,
-        },
-      });
-
-      setIsFavorited(response.data.subscribed);
-    } catch (error) {
-      // 处理错误
-      console.error(error);
-    }
-  };
-
-  const getPlaylistDetail = async () => {
-    try {
-      const response = await axios.get(`${site.api}/playlist/detail`, {
-        params: {
-          id: id,
-        },
-      });
-
-      setPlaylistDetail(response.data.playlist);
-      console.log(response.data.playlist);
-    } catch (error) {
-      // 处理错误
-      console.error(error);
-    }
-  };
-
-  const getPlaylistTracks = async () => {
-    try {
-      const response = await axios.get(`${site.api}/playlist/track/all`, {
-        params: {
-          id: id,
-          limit: 1000,
-        },
-      });
-
-      setPlaylistTrack(response.data.songs);
-    } catch (error) {
-      // 处理错误
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    if (id !== null) {
-      checkIsFavorited();
-      getPlaylistDetail();
-      getPlaylistTracks();
-    }
-  }, [id]);
+    const fetchData = async () => {
+      try {
+        const [detailResponse, tracksResponse, favoriteResponse] = await Promise.all([
+          axios.get(`${site.api}/playlist/detail`, {
+            params: {
+              id: id,
+              cookie: cookie,
+            },
+          }),
+          axios.get(`${site.api}/playlist/track/all`, {
+            params: {
+              id: id,
+              limit: 1000,
+              cookie: cookie,
+            },
+          }),
+          axios.get(`${site.api}/playlist/detail/dynamic`, {
+            params: {
+              id: id,
+              cookie: cookie,
+            },
+          }),
+        ]);
+    
+        setPlaylistDetail(detailResponse.data.playlist);
+        setPlaylistTrack(tracksResponse.data.songs);
+        setIsFavorited(favoriteResponse.data.subscribed);
+      } catch (error) {
+        // 处理错误
+        console.error(error);
+      }
+    };
+    
+    useEffect(() => {
+      if (id !== null) {
+        fetchData();
+      }
+    }, [id]);
 
   const cookie = localStorage.getItem("cookie");
 
@@ -139,13 +122,13 @@ export default function Playlist() {
                   <CardDescription>
                     <div className="text-balance mt-2">
                       <Badge variant="secondary" className="rounded-full mr-2">
-                        Playlist
+                        歌单
                       </Badge>
-                      created by{" "}
-                      {playlistDetail !== null &&
-                        playlistDetail.creator.nickname}
+                     创建者{" "}
+                      <span className="opacity-75">{playlistDetail !== null &&
+                        playlistDetail.creator.nickname}</span>
                       , {playlistDetail !== null && playlistDetail.trackCount}{" "}
-                      songs
+                      首歌
                     </div>
                   </CardDescription>
                 </CardHeader>
@@ -154,7 +137,7 @@ export default function Playlist() {
                     {playlistDetail !== null && playlistDetail.description}
                     {playlistDetail !== null &&
                       playlistDetail.description === null &&
-                      "No description could be displayed"}
+                      "没有简介"}
                   </p>
                 </CardContent>
                 <CardFooter>
@@ -172,7 +155,7 @@ export default function Playlist() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      Play
+                      播放全部
                     </Button>
                     <Button
                       variant="ghost"
@@ -209,7 +192,7 @@ export default function Playlist() {
                           />
                         </svg>
                       )}
-                      {isFavorited ? "Cancel Starred" : "Star"}
+                      {isFavorited ? "取消收藏" : "收藏"}
                     </Button>
                   </div>
                 </CardFooter>
